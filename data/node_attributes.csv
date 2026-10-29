@@ -1,0 +1,125 @@
+graph_node,sheet_name,type,resilient,smart,decarbonized,match
+ABDI,Agência Brasileira de Desenvolvimento Industrial,GOV,0,1,0,exact
+ABNT,Associação Brasileira de Normas Técnicas,BUS,1,1,1,exact
+AEAS,Associação de Engenheiros e Arquitetos de Santos,BUS,0,0,1,exact
+ALANA,Instituto Alana,SOC,1,0,0,exact
+ANAMMA,Associação Nacional de Municípios e Meio Ambiente,SOC,1,0,1,exact
+ANTAQ,Agencia nacional de transportes aquaviacrios,GOV,1,0,0,exact
+APS,Autoridade portuária de Santos,GOV,0,1,1,exact
+AVINA,Fundação Avina,SOC,1,0,0,exact
+BMUNDIAL,Banco Mundial,INT,1,0,0,exact
+BNDES,Banco Nacional de Desenvolvimento Econômico e Social,GOV,1,0,1,exact
+BPBES,Plataforma Brasileira de Biodiversidade e Serviços Ecossistêmicos,SOC,1,0,0,exact
+C40,C40 Cities Climate Leadership Group,INT,1,1,1,exact
+CAIXA,Caixa Econômica federal,GOV,1,1,0,variant
+CAMARA-MSP,Câmara Municipal de São Paulo,GOV,0,1,0,exact
+CBCS,Conselho Brasileiro de Construção Sustentável,SOC,,,,exact
+CC,Ministério da Casa Civil,GOV,1,0,0,probable
+CEBDS,Conselho Empresarial Brasileiro para o Desenvolvimento Sustentável,BUS,1,1,1,disambiguation
+CEMADEN,Centro Nacional de Monitoramento e Alerta de Desastres Naturais,GOV,1,0,0,variant
+CET,Companhia de Engenharia de Tráfego de São Paulo,GOV,1,1,1,probable
+CET-SANTOS,Companhia de engenharia de tráfego,GOV,0,1,0,exact
+CETESB,Companhia Ambiental do Estado de São Paulo,GOV,1,0,1,variant
+CGM-MSP,Controladoria Geral do Município de São Paulo,GOV,0,1,0,exact
+CGU,Controladoria-Geral da União,GOV,1,0,0,variant
+CMA,CMA_CGM group,BUS,0,0,1,exact
+CMMCE-MSP,,,,,,none
+COMAM-SJC,Conselho Municipal de Meio Ambiente de São José dos Campos,CONS,1,0,1,exact
+COMDEC-MSP,Defesa Civil do Município de São Paulo,GOV,1,0,0,probable
+CONGEPDEC,,,,,,none
+CPQD,Centro de Pesquisa e Desenvolvimento em Telecomunicações,BUS,1,1,0,variant
+CPTM,Companhia Paulista de Trens Metropolitanos,BUS,1,0,1,exact
+CREA-SP,Conselho Regional de Engenharia e Agronomia de São Paulo,BUS,1,1,1,exact
+CSC,,,,,,none
+CUBO-ITAU,Cubo Itaú,BUS,0,1,0,variant
+CUFA,Central Única de Favelas,SOC,1,0,0,exact
+DEFESA-SANTOS,Defesa Civil de Santos,GOV,1,0,0,variant
+DEFESA-SJC,Defesa Civil de São José dos Campos,GOV,1,0,0,variant
+DEFESA-SP,Defesa Civil do Estado de São Paulo,GOV,1,0,0,variant
+DER,Departamento de Estradas de Rodagem do Estado de São Paulo,GOV,0,1,0,exact
+ECOBAIRRO,Ecobairro,SOC,1,0,0,exact
+EMBRAPII,Empresa Brasileira de Pesquisa e Inovação Industrial,GOV,1,1,1,exact
+ETHOS,Instituto Ethos de Empresas e Responsabilidade Social,SOC,0,1,1,exact
+FALCOES,Gerando Falcões,SOC,1,0,0,variant
+FAPESP,Fundação de Amparo à Pesquisa do Estado de SP,SCI,1,1,1,exact
+FBOTICARIO,Fundação Grupo Boticário,BUS,1,0,1,exact
+FECOMERCIO,FecomercioSP,BUS,1,0,0,exact
+FGV,Fundação Getulio Vargas – Escola de Administração de Empresas de São Paulo,SCI,1,1,1,variant
+FINEP,Financiadora de Estudos e Projetos,GOV,0,1,1,exact
+FNP,Frente Nacional de Prefeitos,CONS,1,1,1,exact
+FUG,Fundação Ulysses Guimarães,BUS,1,0,0,exact
+GCM-MSP,,,,,,none
+GCM-SJC,Guarda Civil Municipal de São José dos Campos,GOV,0,0,1,exact
+GCOM,Global Covenant of Mayors for Climate & Energy,BUS,1,1,1,exact
+GIZ,Agência de Cooperação Alemã para o Desenvolvimento Sustentável,INT,1,0,0,exact
+ICC,Instituto de Conservação Costeira,SOC,1,0,0,variant
+ICIDADES,Instituto Cidades Sustentáveis,SOC,1,0,1,exact
+ICLEI,ICLEI – Governos Locais pela Sustentabilidade,INT,1,1,1,exact
+ICS,Instituto Clima e Sociedade,SOC,1,0,1,exact
+IFSP,IF São Paulo,SCI,1,0,0,variant
+IIS,Instituto Internacional para Sustentabilidade,SOC,1,0,0,exact
+IMCI,Instituto Movimento Cidades Inteligentes,SOC,0,1,0,exact
+INPE,Instituto Nacional de Pesquisas Espaciais,SCI,1,0,0,exact
+INSPER,Insper,SCI,1,0,1,exact
+IPA,Instituto de Pesquisas Ambientais,SCI,1,0,0,exact
+IPT,Instituto de Pesquisas Tecnológicas,SCI,1,1,1,exact
+ITA,Instituto Tecnológico de Aeronáutica,SCI,1,1,1,exact
+KEARNEY,Kearney Sustentabilidade e Cooperação Internacional,BUS,1,0,0,exact
+MACKENZIE,Mackenzie,SCI,1,1,1,exact
+MCIDADES,Ministério das Cidades,GOV,1,1,1,variant
+MCR2030,,,,,,none
+MCT,,,,,,none
+MCTI,Ministério da Ciência Tecnologia e Comunicação,GOV,1,1,1,variant
+MDR,Ministério do Desenvolvimento Regional,GOV,0,1,0,variant
+MGI,Ministério da Gestão e da Inovação em Serviços Públicos,GOV,0,1,0,variant
+MMA,Ministério do Meio Ambiente e Mudança do Clima,GOV,1,0,1,variant
+MME-BR,Ministério de Minas e Energia,GOV,0,0,1,exact
+MPF,Ministério Público Federal,GOV,1,0,0,exact
+MPSP,Ministério Público do Estado de São Paulo,GOV,1,0,0,variant
+NECTA,Necta (consultoria de inovação e cidades inteligentes),BUS,0,1,0,probable
+NEXUS,,,,,,none
+NUPEF,"Núcleo de pesquisa, estudos e formação",SOC,0,1,0,exact
+PA,,,,,,none
+PIT-SANTOS,Parque tecnológico de santos,GOV,0,1,0,exact
+PIT-SJC,Parque de Inovação Tecnológica de São José dos Campos,BUS,1,1,1,exact
+Pref-SANTOS,Prefeitura de Santos,GOV,1,0,1,exact
+Pref-SJC,Prefeitura de São José dos Campos,GOV,1,1,1,exact
+Pref-SP,Prefeitura de São Paulo,GOV,1,1,1,exact
+PrOCOMUM,Instituto Procomum,SOC,1,1,0,variant
+PRODAM,Empresa de Tecnologia da Informação e Comunicação do Município de São Paulo,GOV,1,1,1,variant
+REDECLIMA,Rede Clima,SCI,1,0,0,exact
+REDEODS,Rede ODS Brasil,SOC,1,0,0,exact
+RNP,Rede Nacional de Ensino e Pesquisa,GOV,0,1,0,exact
+ROCKFELLER,Fundação Rockefeller Foundation,BUS,1,0,0,exact
+SABESP,Companhia de Saneamento Básico do Estado de São Paulo,BUS,1,0,1,exact
+SANTOSBR,Santos Brasil,BUS,0,0,1,variant
+SCBA,Smart City Business America,BUS,0,1,0,exact
+SCLIMA-MSP,,,,,,none
+SCTI,"Secretaria de Ciência, Tecnologia e Inovação do Estado de São Paulo",GOV,0,1,0,variant
+SDE-SP,Secretaria de Desenvolvimento Econômico do Estado de SP,,0,1,0,exact
+SDET-MSP,Secretaria Municipal de Desenvolvimento Econômico e Trabalho de São Paulo,GOV,0,1,1,probable
+SDH-SP,Secretaria Estadual de Desenvolvimento Urbano e Habitação,GOV,1,1,0,probable
+SDHU,Companhia de Desenvolvimento Habitacional e Urbano do Estado de São Paulo,GOV,1,0,1,variant
+SDU-SANTOS,Secretaria Municipal de Desenvolvimento Urbano de Santos,GOV,1,0,0,exact
+SEBRAE-SP,,,,,,none
+SEC-SANTOS,,,,,,none
+SEC-SJC,Secretaria de Educação de São José dos Campos,GOV,0,1,0,probable
+SECLIMA,,,,,,none
+SECLIMA-MSP,Secretaria Executiva de Mudanças Climáticas da Prefeitura de São Paulo (SECLIMA),GOV,1,0,1,exact
+SECOVI-MSP,Sindicato dos empresarios de compra e venda locação e aministração de imoveis residenciais e comerciais de São Paulo,BUS,1,0,0,variant
+SEDEC-BR,Secretaria Nacional de Proteção e Defesa Civil,GOV,1,0,0,exact
+SEGOV-SANTOS,Secretaria muncipal de governo de santos,GOV,0,1,0,exact
+SEMAM,,,,,,none
+SEMAM-SANTOS,"Secretaria Municipal de Meio Ambiente, Proteção e Defesa Animal",GOV,1,1,1,exact
+SEMIL-SP,"Secretaria do Meio Ambiente, Infraestrutura e Logística",GOV,1,1,1,exact
+SGRI-SP,Secretaria estadual de Relações Institucionais,GOV,0,1,0,probable
+SHAB-MSP,Secretaria Municipal de Habitação de São Paulo,GOV,1,0,1,variant
+SIMACLIM,,,,,,none
+SIURB-MSP,Secretaria Municipal de Infraestrutura Urbana e Obras de São Paulo,GOV,1,0,0,exact
+SMG-MSP,Secretaria Municipal de Gestão de São Paulo,GOV,0,1,0,variant
+SMIT-MSP,Secretaria Municipal de Inovação e Tecnologia de São Paulo,GOV,0,1,0,exact
+SMUL-MSP,Secretaria Municipal de Urbanismo e Licenciamento,GOV,1,0,0,exact
+SPAGUAS,Agência de Águas de São Paulo,GOV,1,0,0,exact
+SUS-SJC,,,,,,none
+SVMA-MSP,Secretaria Municipal do Verde e do Meio Ambiente de São Paulo,GOV,1,1,1,exact
+UN,Organização das Nações Unidas,INT,1,1,1,variant

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scientific basis — Governing Resilient Cities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,480;0,9..144,560;0,9..144,650;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f4ee; --paper2:#eee9dd; --ink:#16241f; --ink-soft:#4b5750; --ink-faint:#7c857e;
+  --teal:#1f6f63; --teal-deep:#134f46; --teal-tint:#e4efec; --ochre:#c98a2c; --ochre-tint:#f5e8d2;
+  --line:#ddd6c6; --card:#ffffff; --shadow:0 1px 2px rgba(22,36,31,.05), 0 10px 28px rgba(22,36,31,.07);
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#11201c; --paper2:#162620; --ink:#eef1ec; --ink-soft:#aab6ac; --ink-faint:#798a80;
+    --teal:#56b6a6; --teal-deep:#3d8f82; --teal-tint:#17322b; --ochre:#e0ab5a; --ochre-tint:#2e2416;
+    --line:#2b3a32; --card:#16251f; --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 32px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11201c; --paper2:#162620; --ink:#eef1ec; --ink-soft:#aab6ac; --ink-faint:#798a80;
+  --teal:#56b6a6; --teal-deep:#3d8f82; --teal-tint:#17322b; --ochre:#e0ab5a; --ochre-tint:#2e2416;
+  --line:#2b3a32; --card:#16251f; --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 32px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--paper)}
+h1,h2,h3,.display{font-family:Fraunces,Georgia,"Times New Roman",serif;color:var(--ink);letter-spacing:-.01em;font-weight:650}
+a{color:inherit}
+img,svg{max-width:100%;display:block}
+
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.hdrbar{display:flex;align-items:center;gap:28px;padding:14px 28px;max-width:1180px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14.5px;white-space:nowrap}
+.brand svg{width:26px;height:26px;flex:0 0 26px}
+.navlist{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-left:4px}
+.navlist a, .navlist span{font-size:13.5px;font-weight:500;padding:8px 12px;border-radius:999px;text-decoration:none;color:var(--ink-soft);white-space:nowrap}
+.navlist a:hover{color:var(--ink);background:var(--paper2)}
+.navlist a.current{color:var(--ink);background:var(--paper2)}
+.navlist .soon{color:var(--ink-faint);display:flex;align-items:center;gap:6px;cursor:default}
+.navlist .soon i{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.04em;background:var(--line);color:var(--ink-soft);border-radius:5px;padding:2px 6px}
+.cta{margin-left:auto;flex:0 0 auto}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:13.5px;font-weight:600;
+  text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-deep)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--teal)}
+
+.col{max-width:700px;margin:0 auto;padding:0 28px}
+.readhero{padding:68px 0 10px}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--teal-deep);margin-bottom:18px}
+.kicker .dotrow{display:flex;gap:4px}
+.kicker .dotrow i{width:7px;height:7px;border-radius:50%;display:inline-block}
+h1.pagetitle{font-size:clamp(34px,4.6vw,48px);line-height:1.1;margin:0 0 20px}
+.lede{font-size:19px;line-height:1.75;color:var(--ink-soft);margin:0 0 10px;max-width:40em}
+
+article{padding:26px 0 10px}
+article h2{font-size:clamp(22px,2.6vw,27px);margin:46px 0 18px;padding-top:6px}
+article h2:first-of-type{margin-top:28px}
+article p{font-size:17.5px;line-height:1.76;color:var(--ink-soft);margin:0 0 22px;max-width:40em}
+article p a.cite{color:var(--teal-deep);text-decoration:none;border-bottom:1px solid var(--teal);padding-bottom:1px}
+article p a.cite:hover{background:var(--teal-tint)}
+
+.conceptbox{background:var(--teal-tint);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin:0 0 30px}
+.conceptbox .clabel{display:block;font-size:12px;font-weight:650;letter-spacing:.05em;color:var(--teal-deep);margin-bottom:8px}
+.conceptbox h3{font-size:17px;margin:0 0 10px;font-weight:650}
+.conceptbox p{margin:0;font-size:16px;line-height:1.7;color:var(--ink-soft);max-width:none}
+.pending{font-style:italic;color:var(--ink-faint)}
+
+.hyplist{list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:16px}
+.hyplist li{display:flex;gap:14px;align-items:flex-start;font-size:17.5px;line-height:1.7;color:var(--ink-soft);max-width:40em}
+.hyplist .hdot{flex:0 0 7px;width:7px;height:7px;border-radius:50%;background:var(--ochre);margin-top:11px}
+
+.rqbox{background:var(--card);border:1.5px solid var(--teal);border-radius:16px;padding:22px 26px;margin:0 0 20px}
+.rqbox .qlabel{display:block;font-size:12px;font-weight:650;letter-spacing:.05em;color:var(--teal-deep);margin-bottom:10px}
+.rqbox p{font-family:Fraunces,Georgia,serif;font-weight:560;font-size:clamp(18px,2.2vw,21px);line-height:1.5;color:var(--ink);margin:0;max-width:none}
+
+.refs{padding:10px 0 20px;border-top:1px solid var(--line);margin-top:20px}
+.refs h2{font-size:22px;margin:40px 0 24px}
+.reflist{display:flex;flex-direction:column;gap:16px}
+.refitem{font-size:14.5px;line-height:1.65;color:var(--ink-soft);padding-left:26px;text-indent:-26px;scroll-margin-top:90px}
+.refitem a{color:var(--teal-deep);text-decoration:none;border-bottom:1px solid var(--line)}
+.refitem a:hover{border-color:var(--teal)}
+.refitem:target{background:var(--ochre-tint);border-radius:8px;padding:8px 10px 8px 34px;text-indent:-26px;margin:-8px -10px}
+
+.closing{padding:30px 0 20px;border-top:1px solid var(--line);margin-top:10px}
+.closing p{color:var(--ink-soft);margin:0 0 20px;max-width:38em}
+
+
+.nextsteps{padding:56px 0 20px}
+.nextsteps h2{font-size:13px;font-weight:650;letter-spacing:.04em;text-transform:none;color:var(--ink-faint);margin:0 0 20px;border-top:1px solid var(--line);padding-top:36px}
+.linkrow{display:flex;flex-direction:column;gap:0}
+.linkitem{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.linkitem:first-child{border-top:1px solid var(--line)}
+.linkitem .li-text b{display:block;font-family:Fraunces,Georgia,serif;font-size:19px;font-weight:650;margin-bottom:4px}
+.linkitem .li-text span{font-size:14px;color:var(--ink-soft)}
+.linkitem .li-arrow{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1.4px solid var(--line);display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s}
+.linkitem:hover .li-arrow{border-color:var(--teal);background:var(--teal-tint)}
+.linkitem.disabled{cursor:default;color:var(--ink-faint)}
+.linkitem.disabled .li-text b{color:var(--ink-faint)}
+.linkitem.disabled .li-arrow{opacity:.4}
+.linkitem.disabled .tag{margin-left:8px}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;background:var(--line);color:var(--ink-soft);border-radius:5px;padding:2px 7px;vertical-align:middle}
+.tag.live{background:var(--teal);color:#fff}
+
+footer{border-top:1px solid var(--line);padding:40px 0;margin-top:0}
+.footgrid{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;max-width:1180px;margin:0 auto;padding:0 28px}
+.footgrid .brand{font-size:13.5px}
+.footnote{font-size:12.5px;color:var(--ink-faint);max-width:420px}
+.footlinks{display:flex;gap:16px;font-size:13px}
+.footlinks a{text-decoration:none;color:var(--ink-soft)}
+.footlinks a:hover{color:var(--ink)}
+
+@media (max-width:620px){
+  .col,.footgrid{padding:0 18px}
+  .hdrbar{padding:12px 18px}
+  .navlist{display:none}
+  article p,.hyplist li{font-size:16.5px}
+  .conceptbox{padding:20px 20px}
+  .rqbox{padding:18px 20px}
+}
+</style>
+</head>
+<body>
+<a id="top"></a>
+<header>
+  <div class="hdrbar">
+    <div class="brand">
+      <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="6" r="3.6" fill="#1f6f63"/><circle cx="5" cy="20" r="3.6" fill="#c98a2c"/><circle cx="21" cy="20" r="3.6" fill="#4e79c4"/><line x1="13" y1="6" x2="5" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="13" y1="6" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="5" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/></svg>
+      <span>Governing Resilient Cities</span>
+    </div>
+    <nav class="navlist">
+      <a href="index.html">Welcome</a>
+      <a href="intro.html">Short introduction</a>
+      <a href="how.html">How it works</a>
+      <span class="soon">Roadmap for integration <i>soon</i></span>
+      <a href="#" class="current">Scientific basis</a>
+    </nav>
+    <div class="cta"><a class="btn btn-primary" href="platform.html" target="_blank" rel="noopener">Explore the platform</a></div>
+  </div>
+</header>
+
+<main>
+  <section class="readhero">
+    <div class="col">
+      <div class="kicker">
+        <span class="dotrow"><i style="background:#1f6f63"></i><i style="background:#c98a2c"></i><i style="background:#4e79c4"></i></span>
+        Scientific basis
+      </div>
+      <h1 class="pagetitle">Scientific basis</h1>
+      <p class="lede">As with any interdisciplinary project in environmental science, our work combines several theoretical frameworks and connects them to real-world applications. The sections below outline the building blocks of our approach.</p>
+    </div>
+  </section>
+
+  <article>
+    <div class="col">
+
+      <h2>Policy Coherence Literature</h2>
+      <p>The policy coherence literature grows out of policy process studies. It provides theoretical and empirical explanations of the extent to which policy can be shaped to align with higher-order objectives. We examine the coherence of objectives, strategies, and instruments (<a class="cite" href="#ref-cairney2025">Cairney, 2025</a>; <a class="cite" href="#ref-dzebo2025">Dzebo et al., 2025</a>).</p>
+
+      <div class="conceptbox">
+        <span class="clabel">Concept box</span>
+        <h3>What Is Coherence?</h3>
+        <p>We use the definition from <a class="cite" href="#ref-bocquillon2018">Bocquillon (2018)</a>, which describes coherence as a process through which a policy image is created. This process binds different policy objectives and instruments across traditional government sectors, guided by a set of directing principles that a wide range of actors perceive as legitimate.</p>
+      </div>
+
+      <p>Ideas are one way policy processes take shape. Recent work in the policy coherence area treats ideas, interests, and institutions as the backbone of the policy process that produces coherence or incoherence (<a class="cite" href="#ref-shawoo2023">Shawoo et al., 2023</a>).</p>
+
+      <h2>Ideas, Beliefs, and the Advocacy Coalition Framework</h2>
+      <p>Because our work focuses on ideas and beliefs, we draw on the Advocacy Coalition Framework (ACF), a well-established approach in political science. The ACF explains how ideas and beliefs shape actors and coalitions and inform the policy process (<a class="cite" href="#ref-weible2011">Weible et al., 2011</a>, <a class="cite" href="#ref-weible2020">2020</a>). Our definitions draw on types of beliefs and how they interact within actors’ disputes (<a class="cite" href="#ref-weible2020">Weible et al., 2020</a>). Work on cross-coalition coordination further illustrates how coalitions form and cooperate (<a class="cite" href="#ref-aernebonoli2023">Aerne &amp; Bonoli, 2023</a>).</p>
+
+      <h2>Network Perspective and Discourse Networks</h2>
+      <p>We adopt a network perspective, specifically the discourse network approach (<a class="cite" href="#ref-leifeld2017">Leifeld, 2017</a>). This approach combines discourse affinity, which binds actors together. Discourses represent the intentions behind collective action and how problems and solutions are framed. For this reason, the approach is central to providing quantitative measures for the policy coherence discussion.</p>
+
+      <div class="conceptbox">
+        <span class="clabel">Concept box</span>
+        <h3>How Discourses Shape Policy Action</h3>
+        <p class="pending">Content pending.</p>
+      </div>
+
+      <h2>Research Questions and Hypotheses</h2>
+
+      <div class="rqbox">
+        <span class="qlabel">Main research question</span>
+        <p>How is the governance of smart, resilient, and sustainable cities in São Paulo, Santos, and São José dos Campos, from a discursive networked perspective?</p>
+      </div>
+      <div class="rqbox">
+        <span class="qlabel">Secondary research question</span>
+        <p>What might be the potential pathways to improve policy coherence of smart, resilient, and sustainable cities?</p>
+      </div>
+
+      <p style="margin-top:34px"><b style="color:var(--ink)">Hypotheses</b></p>
+      <ul class="hyplist">
+        <li><span class="hdot"></span><span>Uniting actors who belong to the same discursive coalition will improve coherence (<a class="cite" href="#ref-weible2020">Weible et al., 2020</a>; <a class="cite" href="#ref-kurzelenschow2018">Kurze &amp; Lenschow, 2018</a>).</span></li>
+        <li><span class="hdot"></span><span>Disclosing which beliefs are more stable and which are more contested will improve coherence (<a class="cite" href="#ref-skovgaard2018">Skovgaard, 2018</a>).</span></li>
+        <li><span class="hdot"></span><span>Identifying brokers who can mediate multiple interests across groups will improve coherence (<span class="pending">citation pending</span>; <a class="cite" href="#ref-bocquillon2018">Bocquillon, 2018</a>).</span></li>
+        <li><span class="hdot"></span><span>Providing a more accurate measure of belief coherence potential will reveal the limits to coherence (<a class="cite" href="#ref-kefeli2023">Kefeli et al., 2023</a>; <a class="cite" href="#ref-gerstenberg2026">Gerstenberg et al., 2026</a>).</span></li>
+      </ul>
+
+      <p>Building on this theoretical approach, we apply it to the role of ideas and beliefs in research agendas on smart cities, resilient cities, and decarbonised cities.</p>
+    </div>
+
+    <div class="col refs">
+      <h2>References</h2>
+      <div class="reflist">
+        <p class="refitem" id="ref-aernebonoli2023">Aerne, A., &amp; Bonoli, G. (2023). Normative, rational, and relational motives in cross-coalition coordination for a VET refugee programme. <i>Journal of Public Policy, 43</i>(2), 215–239. <a href="https://doi.org/10.1017/S0143814X22000290" target="_blank" rel="noopener">https://doi.org/10.1017/S0143814X22000290</a></p>
+        <p class="refitem" id="ref-bocquillon2018">Bocquillon, P. (2018). (De-)constructing coherence? Strategic entrepreneurs, policy frames and the integration of climate and energy policies in the European Union. <i>Environmental Policy and Governance, 28</i>, 339–349. <a href="https://doi.org/10.1002/eet.1820" target="_blank" rel="noopener">https://doi.org/10.1002/eet.1820</a></p>
+        <p class="refitem" id="ref-cairney2025">Cairney, P. (2025). Policymaking integration, policy coherence, and whole-of-government approaches: A qualitative systematic review of advice for policymakers. <i>Open Research Europe, 5</i>, Article 75. <a href="https://doi.org/10.12688/openreseurope.19864.1" target="_blank" rel="noopener">https://doi.org/10.12688/openreseurope.19864.1</a></p>
+        <p class="refitem" id="ref-dzebo2025">Dzebo, A., Shawoo, Z., &amp; Browne, K. (2025). Does policy coherence make national implementation of global sustainability agendas more successful? <i>Annual Review of Environment and Resources, 50</i>, 539–562. <a href="https://doi.org/10.1146/annurev-environ-111523-102337" target="_blank" rel="noopener">https://doi.org/10.1146/annurev-environ-111523-102337</a></p>
+        <p class="refitem" id="ref-gerstenberg2026">Gerstenberg, A., Zambianchi, V., &amp; Bruch, N. (2026). Inevitable incoherence? Accounts on policy (in)coherence as an essentially contested concept in climate change mitigation. <i>Earth System Governance, 29</i>, Article 100343. <a href="https://doi.org/10.1016/j.esg.2026.100343" target="_blank" rel="noopener">https://doi.org/10.1016/j.esg.2026.100343</a></p>
+        <p class="refitem" id="ref-kefeli2023">Kefeli, D., Siegel, K. M., Pittaluga, L., et al. (2023). Environmental policy integration in a newly established natural resource-based sector: The role of advocacy coalitions and contrasting conceptions of sustainability. <i>Policy Sciences, 56</i>, 69–93. <a href="https://doi.org/10.1007/s11077-022-09485-z" target="_blank" rel="noopener">https://doi.org/10.1007/s11077-022-09485-z</a></p>
+        <p class="refitem" id="ref-kurzelenschow2018">Kurze, K., &amp; Lenschow, A. (2018). Horizontal policy coherence starts with problem definition: Unpacking the EU integrated energy-climate approach. <i>Environmental Policy and Governance, 28</i>, 329–338. <a href="https://doi.org/10.1002/eet.1819" target="_blank" rel="noopener">https://doi.org/10.1002/eet.1819</a></p>
+        <p class="refitem" id="ref-leifeld2017">Leifeld, P. (2017). Discourse network analysis: Policy debates as dynamic networks. In J. N. Victor, M. N. Lubell, &amp; A. H. Montgomery (Eds.), <i>The Oxford handbook of political networks</i> (pp. <span class="pending">page range pending</span>). Oxford University Press.</p>
+        <p class="refitem" id="ref-shawoo2023">Shawoo, Z., Maltais, A., Dzebo, A., &amp; Pickering, J. (2023). Political drivers of policy coherence for sustainable development: An analytical framework. <i>Environmental Policy and Governance, 33</i>(4), 339–350. <a href="https://doi.org/10.1002/eet.2039" target="_blank" rel="noopener">https://doi.org/10.1002/eet.2039</a></p>
+        <p class="refitem" id="ref-skovgaard2018">Skovgaard, J. (2018). Policy coherence and organizational cultures: Energy efficiency and greenhouse gas reduction targets. <i>Environmental Policy and Governance, 28</i>, 350–358. <a href="https://doi.org/10.1002/eet.1821" target="_blank" rel="noopener">https://doi.org/10.1002/eet.1821</a></p>
+        <p class="refitem" id="ref-weible2011">Weible, C. M., Sabatier, P. A., Jenkins-Smith, H. C., Nohrstedt, D., Henry, A. D., &amp; deLeon, P. (2011). A quarter century of the advocacy coalition framework: An introduction to the special issue. <i>Policy Studies Journal, 39</i>(3), 349–360. <span class="pending">DOI pending</span></p>
+        <p class="refitem" id="ref-weible2020">Weible, C. M., Ingold, K., Nohrstedt, D., Henry, A. D., &amp; Jenkins-Smith, H. C. (2020). Sharpening advocacy coalitions. <i>Policy Studies Journal, 48</i>(4), 1054–1081. <a href="https://doi.org/10.1111/psj.12360" target="_blank" rel="noopener">https://doi.org/10.1111/psj.12360</a></p>
+      </div>
+    </div>
+
+    <div class="col closing">
+      <p>This scientific basis underpins every view on the platform — the network, the communities, and the discourse profiles.</p>
+      <a class="btn btn-primary" href="platform.html" target="_blank" rel="noopener">Explore the platform</a>
+    </div>
+
+    <section class="nextsteps">
+    <div class="col">
+      <h2>Where to go from here</h2>
+      <div class="linkrow">
+        <a class="linkitem" href="index.html">
+          <div class="li-text"><b>Welcome <span class="tag live">Open</span></b><span>Back to the project welcome page.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+        <a class="linkitem" href="intro.html">
+          <div class="li-text"><b>Short introduction <span class="tag live">Open</span></b><span>Learn more about the aims and how the platform works.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+        <a class="linkitem" href="how.html">
+          <div class="li-text"><b>How it works <span class="tag live">Open</span></b><span>See the logic of the platform, with examples.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+        <a class="linkitem disabled" aria-disabled="true">
+          <div class="li-text"><b>Roadmap for integration <span class="tag">Soon</span></b><span>See the team's analysis for your institution.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+  </article>
+</main>
+
+<footer>
+  <div class="footgrid">
+    <div class="brand">
+      <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="13" cy="6" r="3.6" fill="#1f6f63"/><circle cx="5" cy="20" r="3.6" fill="#c98a2c"/><circle cx="21" cy="20" r="3.6" fill="#4e79c4"/><line x1="13" y1="6" x2="5" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="13" y1="6" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="5" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/></svg>
+      <span>CCD: Carbon Neutral Cities</span>
+    </div>
+    <p class="footnote">Technological research institute, São Paulo · Funded by FAPESP</p>
+    <div class="footlinks">
+      <a href="index.html">Welcome</a>
+      <a href="platform.html" target="_blank" rel="noopener">Platform</a>
+      <a href="#top">Top</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Short introduction — Governing Resilient Cities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,480;0,9..144,560;0,9..144,650;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f4ee; --paper2:#eee9dd; --ink:#16241f; --ink-soft:#4b5750; --ink-faint:#7c857e;
+  --teal:#1f6f63; --teal-deep:#134f46; --teal-tint:#e4efec; --ochre:#c98a2c; --ochre-tint:#f5e8d2;
+  --line:#ddd6c6; --card:#ffffff; --shadow:0 1px 2px rgba(22,36,31,.05), 0 10px 28px rgba(22,36,31,.07);
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#11201c; --paper2:#162620; --ink:#eef1ec; --ink-soft:#aab6ac; --ink-faint:#798a80;
+    --teal:#56b6a6; --teal-deep:#3d8f82; --teal-tint:#17322b; --ochre:#e0ab5a; --ochre-tint:#2e2416;
+    --line:#2b3a32; --card:#16251f; --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 32px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11201c; --paper2:#162620; --ink:#eef1ec; --ink-soft:#aab6ac; --ink-faint:#798a80;
+  --teal:#56b6a6; --teal-deep:#3d8f82; --teal-tint:#17322b; --ochre:#e0ab5a; --ochre-tint:#2e2416;
+  --line:#2b3a32; --card:#16251f; --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 32px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--paper)}
+h1,h2,h3,.display{font-family:Fraunces,Georgia,"Times New Roman",serif;color:var(--ink);letter-spacing:-.01em;font-weight:650}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+img,svg{max-width:100%;display:block}
+
+/* ---------- header (shared pattern) ---------- */
+header{position:sticky;top:0;z-index:30;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.hdrbar{display:flex;align-items:center;gap:28px;padding:14px 28px;max-width:1180px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14.5px;white-space:nowrap}
+.brand svg{width:26px;height:26px;flex:0 0 26px}
+.navlist{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-left:4px}
+.navlist a, .navlist span{font-size:13.5px;font-weight:500;padding:8px 12px;border-radius:999px;text-decoration:none;color:var(--ink-soft);white-space:nowrap}
+.navlist a:hover{color:var(--ink);background:var(--paper2)}
+.navlist a.current{color:var(--ink);background:var(--paper2)}
+.navlist .soon{color:var(--ink-faint);display:flex;align-items:center;gap:6px;cursor:default}
+.navlist .soon i{font-style:normal;font-size:10px;font-weight:700;letter-spacing:.04em;background:var(--line);color:var(--ink-soft);border-radius:5px;padding:2px 6px}
+.cta{margin-left:auto;flex:0 0 auto}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:13.5px;font-weight:600;
+  text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit;white-space:nowrap}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-deep)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--teal)}
+
+/* ---------- reading layout ---------- */
+.readhero{padding:68px 0 10px}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--teal-deep);margin-bottom:20px}
+.kicker .dotrow{display:flex;gap:4px}
+.kicker .dotrow i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.col{max-width:660px;margin:0 auto;padding:0 28px}
+.opening{font-family:Fraunces,Georgia,serif;font-weight:560;font-size:clamp(24px,3.4vw,32px);line-height:1.38;color:var(--ink);margin:0 0 8px;letter-spacing:-.005em}
+
+article{padding:34px 0 10px}
+article p{font-size:18.5px;line-height:1.78;color:var(--ink-soft);margin:0 0 26px;max-width:38em}
+article p b{color:var(--ink);font-weight:650}
+
+/* drop cap on the opening paragraph */
+
+
+/* short lead-in before a feature block */
+p.lead-in{margin-bottom:0}
+p.subtitle{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:460;color:var(--ink-soft);margin-top:-6px}
+
+/* qblock: a pulled-out question stacked directly above its own paragraph, as one unit */
+.qblock{margin:32px 0 34px}
+.feature-word{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:560;font-size:clamp(26px,3.4vw,34px);
+  line-height:1.15;color:var(--ochre);letter-spacing:-.01em;margin:0 0 8px}
+.feature-word-sm{font-size:clamp(20px,2.4vw,24px)}
+.feature-text{font-size:18.5px;line-height:1.78;color:var(--ink-soft);margin:0;max-width:none}
+
+.proposition{font-weight:700;color:var(--ink);padding:.02em .15em;border-radius:5px;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  background-color:rgba(201,138,44,.16);
+  animation:propGlow 2.8s ease-in-out infinite}
+@keyframes propGlow{0%,100%{background-color:rgba(201,138,44,.1)}50%{background-color:rgba(201,138,44,.34)}}
+@media (prefers-reduced-motion:reduce){
+  .proposition{animation:none;background-color:rgba(201,138,44,.22)}
+
+}
+
+.pullquote{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(21px,2.6vw,26px);
+  line-height:1.5;color:var(--teal-deep);border-left:3px solid var(--teal);padding:4px 0 4px 26px;margin:14px 0 36px}
+
+.qbox{background:var(--teal-tint);border:1px solid var(--line);border-radius:18px;padding:30px 32px;margin:44px 0 10px}
+.qbox .qlabel{font-size:12px;font-weight:650;letter-spacing:.04em;color:var(--teal-deep);margin-bottom:10px;display:block}
+.qbox p{font-family:Fraunces,Georgia,serif;font-weight:560;font-size:clamp(20px,2.6vw,25px);line-height:1.44;color:var(--ink);margin:0;max-width:none}
+
+.nextsteps{padding:56px 0 86px}
+.nextsteps h2{font-size:13px;font-weight:650;letter-spacing:.04em;text-transform:none;color:var(--ink-faint);margin:0 0 20px;border-top:1px solid var(--line);padding-top:36px}
+.linkrow{display:flex;flex-direction:column;gap:0}
+.linkitem{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.linkitem:first-child{border-top:1px solid var(--line)}
+.linkitem .li-text b{display:block;font-family:Fraunces,Georgia,serif;font-size:19px;font-weight:650;margin-bottom:4px}
+.linkitem .li-text span{font-size:14px;color:var(--ink-soft)}
+.linkitem .li-arrow{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1.4px solid var(--line);display:flex;align-items:center;justify-content:center;transition:border-color .15s,background .15s}
+.linkitem:hover .li-arrow{border-color:var(--teal);background:var(--teal-tint)}
+.linkitem.disabled{cursor:default;color:var(--ink-faint)}
+.linkitem.disabled .li-text b{color:var(--ink-faint)}
+.linkitem.disabled .li-arrow{opacity:.4}
+.linkitem.disabled .tag{margin-left:8px}
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;background:var(--line);color:var(--ink-soft);border-radius:5px;padding:2px 7px;vertical-align:middle}
+.tag.live{background:var(--teal);color:#fff}
+
+footer{border-top:1px solid var(--line);padding:40px 0;margin-top:0}
+.footgrid{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;max-width:1180px;margin:0 auto;padding:0 28px}
+.footgrid .brand{font-size:13.5px}
+.footnote{font-size:12.5px;color:var(--ink-faint);max-width:420px}
+.footlinks{display:flex;gap:16px;font-size:13px}
+.footlinks a{text-decoration:none;color:var(--ink-soft)}
+.footlinks a:hover{color:var(--ink)}
+
+@media (max-width:620px){
+  .wrap,.col,.footgrid{padding:0 18px}
+  .hdrbar{padding:12px 18px}
+  .navlist{display:none}
+  article p{font-size:17px}
+  .qbox{padding:24px 22px}
+  .linkitem{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<a id="top"></a>
+<header>
+  <div class="hdrbar">
+    <div class="brand">
+      <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="6" r="3.6" fill="#1f6f63"/><circle cx="5" cy="20" r="3.6" fill="#c98a2c"/><circle cx="21" cy="20" r="3.6" fill="#4e79c4"/><line x1="13" y1="6" x2="5" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="13" y1="6" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="5" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/></svg>
+      <span>Governing Resilient Cities</span>
+    </div>
+    <nav class="navlist">
+      <a href="index.html">Welcome</a>
+      <a href="#" class="current">Short introduction</a>
+      <a href="how.html">How it works</a>
+      <span class="soon">Roadmap for integration <i>soon</i></span>
+      <a href="scientific-basis.html">Scientific basis</a>
+    </nav>
+    <div class="cta"><a class="btn btn-primary" href="platform.html" target="_blank" rel="noopener">Explore the platform</a></div>
+  </div>
+</header>
+
+<main>
+  <section class="readhero">
+    <div class="col">
+      <div class="kicker">
+        <span class="dotrow"><i style="background:#1f6f63"></i><i style="background:#c98a2c"></i><i style="background:#4e79c4"></i></span>
+        Short introduction
+      </div>
+      <p class="opening">It is always a good idea to increase coherence of our policies! However, it is not as easy as the books say. How can we improve our coherence in our governance systems?</p>
+    </div>
+  </section>
+
+  <article>
+    <div class="col">
+      <p class="subtitle">This is the main question that policy studies have pursued in the past decades. There are no formulas to be applied. Each case is special.</p>
+
+      <p class="lead-in">In this project, we aim to explore governance arrangements from a network science perspective.</p>
+
+      <div class="qblock">
+        <p class="feature-word">Why?</p>
+        <p class="feature-text">Because daily activity is shaped not only by norms, resources, and commands, but also by collaboration between institutions and people. From this network perspective on governance, we aim to offer a relational view: the more relations we have, the greater our potential to collaborate.</p>
+      </div>
+
+      <div class="qblock">
+        <p class="feature-word feature-word-sm">How do we do this?</p>
+        <p class="feature-text">We use discourse analysis techniques to identify the main beliefs that institutions sustain. <strong class="proposition">The proposition is: if both institutions sustain similar beliefs, then they have more potential to collaborate.</strong> We call these belief affinities, which have been seen as a relevant driver to sustain or provide new collaboration, to shape new policy design, or to explain disagreements about how to implement solutions.</p>
+      </div>
+
+      <p class="pullquote">"Finding new groups that think similarly may surprise you with who you can collaborate with, because they sustain the same beliefs."</p>
+
+      <p>Everybody wants to improve social and environmental well-being, but from different perspectives. There is always common ground for collaboration.</p>
+
+      <div class="qbox">
+        <span class="qlabel">The question we explore</span>
+        <p>What communities, actors, and beliefs may inform policy integration in the smart, resilient, and sustainable city agendas in São Paulo, Santos, and São José dos Campos?</p>
+      </div>
+    </div>
+  </article>
+
+  <section class="nextsteps">
+    <div class="col">
+      <h2>Where to go from here</h2>
+      <div class="linkrow">
+        <a class="linkitem" href="how.html">
+          <div class="li-text"><b>How it works <span class="tag live">Open</span></b><span>If you want more scientific details.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+        <a class="linkitem" href="platform.html" target="_blank" rel="noopener">
+          <div class="li-text"><b>Platform <span class="tag live">Open</span></b><span>If you want to go straight to the platform.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+        <a class="linkitem disabled" aria-disabled="true">
+          <div class="li-text"><b>Roadmap analysis <span class="tag">Soon</span></b><span>To go to the roadmap analysis.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+        <a class="linkitem" href="scientific-basis.html">
+          <div class="li-text"><b>Scientific basis <span class="tag live">Open</span></b><span>If you want more scientific details, click on the "scientific basis" page.</span></div>
+          <div class="li-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footgrid">
+    <div class="brand">
+      <svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="13" cy="6" r="3.6" fill="#1f6f63"/><circle cx="5" cy="20" r="3.6" fill="#c98a2c"/><circle cx="21" cy="20" r="3.6" fill="#4e79c4"/><line x1="13" y1="6" x2="5" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="13" y1="6" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/><line x1="5" y1="20" x2="21" y2="20" stroke="currentColor" stroke-width="1.1" opacity=".5"/></svg>
+      <span>CCD: Carbon Neutral Cities</span>
+    </div>
+    <p class="footnote">Technological research institute, São Paulo · Funded by FAPESP</p>
+    <div class="footlinks">
+      <a href="index.html">Welcome</a>
+      <a href="platform.html" target="_blank" rel="noopener">Platform</a>
+      <a href="#top">Top</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
