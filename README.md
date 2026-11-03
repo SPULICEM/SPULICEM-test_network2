@@ -42,7 +42,7 @@ those entries at it the same way the other pages link to each other.
 ## Data and tooling
 
 `data/` holds the source CSVs, the processed graph and the organization attribute files
-(`nodes_profile.xlsx`, `node_attributes.csv`, `node_attribute_crosswalk.csv`).
+(`nodes_profile.xlsx`, `nodes_city_base.xlsx`, `node_attributes.csv`, `node_attribute_crosswalk.csv`).
 `tools/merge_node_attributes.py` merges the attribute sheet into `processed_graph.json` and the
 data embedded in `platform.html` (needs Python with `pandas` and `openpyxl`). It is not needed to
 publish the site.
