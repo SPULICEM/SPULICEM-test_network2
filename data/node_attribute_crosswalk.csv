@@ -1,0 +1,38 @@
+graph_node,sheet_sigla,sheet_row,confidence,note
+CAIXA,CEF,,variant,Caixa Econômica Federal
+CC,MCASA-BR,,probable,Casa Civil — please confirm
+CEBDS,CEBDS,23,disambiguation,"Sheet lists CEBDS twice (rows 22 and 23); row 23 is the Conselho Empresarial Brasileiro para o Desenvolvimento Sustentável"
+CEMADEN,CEMADEN-BR,,variant,
+CET,CET-MSP,,probable,"CET-SANTOS is a separate node, so CET is read as São Paulo — please confirm"
+CETESB,CETESB-SP,,variant,
+CGU,CGU-BR,,variant,
+COMDEC-MSP,Defesa Civil - MSP,,probable,Municipal civil-defence coordination in São Paulo — please confirm
+CPQD,CPqD,,variant,Capitalisation only
+CUBO-ITAU,CUBO,,variant,Cubo Itaú
+DEFESA-SANTOS,Defesa Civil - SANTOS,,variant,
+DEFESA-SJC,Defesa Civil - SJC,,variant,
+DEFESA-SP,Defesa Civil - SP,,variant,
+FALCOES,GFALCO,,variant,Gerando Falcões
+FGV,FGV EAESP,,variant,
+ICC,ICONSCOST,,variant,Instituto de Conservação Costeira
+IFSP,IF-SP,,variant,
+MCIDADES,MCIDADES-BR,,variant,
+MCTI,MCTI-BR,,variant,
+MDR,MDR-BR,,variant,
+MGI,MGI-BR,,variant,
+MMA,MMA-BR,,variant,
+MPSP,MP-SP,,variant,Ministério Público do Estado de São Paulo
+NECTA,NECTA/CSC,,probable,"Sheet has one NECTA/CSC row; CSC is a separate node and is left unmatched"
+PrOCOMUM,PROCOMUM,,variant,
+PRODAM,PRODAM-MSP,,variant,
+SANTOSBR,SB,,variant,Santos Brasil
+SCTI,SCTI-SP,,variant,
+SDET-MSP,SMDET-MSP,,probable,Secretaria Municipal de Desenvolvimento Econômico e Trabalho — please confirm
+SDH-SP,SDUH-SP,,probable,Secretaria Estadual de Desenvolvimento Urbano e Habitação — please confirm
+SDHU,SDHU-SP,,variant,
+SEC-SJC,SEDUC-SJC,,probable,Secretaria de Educação de São José dos Campos — please confirm
+SECOVI-MSP,SECOVI,,variant,
+SGRI-SP,SERI-SP,,probable,Secretaria estadual de Relações Institucionais — please confirm
+SHAB-MSP,SEHAB-MSP,,variant,
+SMG-MSP,SG-MSP,,variant,Secretaria Municipal de Gestão
+UN,ONU,,variant,
