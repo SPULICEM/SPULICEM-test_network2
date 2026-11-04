@@ -62,6 +62,45 @@ middle, and a **right panel** with the results.
   discourse categories, so the baseline (4,939 ties, 3 communities) is unchanged. Removing the theme
   categories from the ties altogether would change those baseline results, so it was not done.
 
+## Community profiles: "vs community" mode (4 November 2026)
+
+The Category profile card has a third view, **vs community**, next to *Share* and *vs network*. It looks like
+*vs network* (bars to the right = above the reference, to the left = below, values in percentage points) but the
+reference comes only from the community's own data, with no network data involved: each category is compared with the
+community's **average category**, defined as an even spread of the section over the categories the community actually
+mentions. If a community mentions 10 concepts, the average is 10% each, so a concept at 25% reads +15 pp. It shows
+what stands out inside the community. Definition details:
+
+- The average is worked out per section (concepts, solutions, themes), over the categories the community mentions
+  in the categories currently selected in the network filter.
+- Categories the community never mentions are shown as light-gray 0% and are not compared (the same rule as vs network).
+- A group row (VP.2, VP.3) is compared with the sum of its mentioned parts' averages, so it equals the sum of its
+  parts' differences when expanded.
+- Row tooltips state the average and how it was obtained; the legend reads "Above / Below community average".
+- The scale is shared across communities, like vs network. Code: `selfRefVec()` and `domainFor(…, "self")`.
+- The *Most / Least emphasised vs network* lists on the left of the card are unchanged (they are always vs network).
+- Verified against an independent calculation from the dataset for every community and row (261 rows, three filter
+  states); Share and vs network render exactly as before.
+- Also fixed: the Share tooltip still referred to the Weighting option removed earlier.
+
+## Community profiles: types of organization (4 November 2026)
+
+The community card (left side of the Communities tab) has a **Types of organization** block, just under the
+member counts, drawn as a single **100% stacked bar**: one segment per type (government, business, civil society,
+science & academia, international, councils & consortia, and "Not classified" for organizations missing from the
+attribute file), in a fixed order. Colour: each type is a **shade of the community's own colour** (one hue per
+community, lightness stepping from dark to light in the legend order, so the same type has the same position in the
+ramp for every community); the text inside a segment switches between white and dark depending on the shade, and the
+ramp starts a little lighter in dark mode. A thin bar below shows the same mix for all organizations in the current
+view (the same reference group as the rest of the card) in **neutral gray with the same lightness steps**. Segments
+wide enough (14%+) print their percentage; a legend lists every type with its count and percentage (types the
+community lacks are greyed). Hovering a segment or a legend item shows the type's share in the community and in the
+network, the difference, and the community's members of that type (top 12 by weighted degree). A line under the block
+names the types that are over- or under-represented by 5 percentage points or more, or says the mix is close to the
+network's. It follows the network and organization filters like the rest of the card. Verified against the dataset for
+every community under several filters. Code: `shadeFor()` in `renderComm()`. The theme button now also re-renders the
+visible tab, so colours written into the Communities, Organizations and Centrality tabs follow the theme at once.
+
 ## Consistency and UX pass (3 November 2026)
 
 A round of small fixes after an inspection of the platform:
