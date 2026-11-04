@@ -402,6 +402,7 @@ body.busy .busyspin{display:flex}
 .tli i{width:10px;height:10px;border-radius:3px;flex:0 0 10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
 .tli b{color:var(--text);font-weight:600}
 .tli.zero{opacity:.5}
+.metric.wide{grid-column:1/-1}
 </style>
 </head>
 <body>
@@ -525,7 +526,8 @@ body.busy .busyspin{display:flex}
           <option value="deg">Connections</option>
           <option value="m">Mentions</option>
           <option value="bc">Betweenness</option>
-          <option value="ev">Eigenvector</option>
+          <option value="bcw">Weighted betweenness</option>
+          <option value="ev">Weighted eigenvector</option>
         </select></div>
       <div class="row"><label for="labels">Labels</label>
         <select id="labels"><option value="auto">Auto</option><option value="all">All</option><option value="none">None</option></select></div>
@@ -544,10 +546,12 @@ body.busy .busyspin{display:flex}
     </section>
 
     <section id="exportSec">
-      <h2>Export filtered graph <span class="info" tabindex="0" role="img" aria-label="About exporting" data-tip="&lt;b&gt;Export the filtered graph&lt;/b&gt;&lt;div&gt;Downloads the network exactly as filtered: the organizations that pass the network and organization filters (only those with ties when “Hide organizations without ties” is on) and the ties between them.&lt;/div&gt;&lt;div style=&quot;margin-top:6px&quot;&gt;GraphML opens in Gephi, Cytoscape, igraph or NetworkX. CSV is a .zip with nodes.csv, edges.csv and a README that records the filters used. Nodes carry type, city base, agendas, community, centralities, layout position and the mentions of every category; ties carry their strength.&lt;/div&gt;">i</span></h2>
+      <h2>Export filtered graph <span class="info" tabindex="0" role="img" aria-label="About exporting" data-tip="&lt;b&gt;Export the filtered graph&lt;/b&gt;&lt;div&gt;Downloads the network exactly as filtered: the organizations that pass the network and organization filters (only those with ties when “Hide organizations without ties” is on) and the ties between them.&lt;/div&gt;&lt;div style=&quot;margin-top:6px&quot;&gt;GraphML opens in Gephi, Cytoscape, igraph or NetworkX. CSV is a .zip with nodes.csv, edges.csv and a README that records the filters used. Nodes carry type, city base, agendas, community, centralities, layout position and the mentions of every category; ties carry their strength.&lt;/div&gt;&lt;div style=&quot;margin-top:6px&quot;&gt;PNG saves the picture of the graph as it is on screen (layout, zoom, labels, highlight) at 300 dpi, optionally with a legend and the filters used underneath.&lt;/div&gt;">i</span></h2>
       <p class="hint" id="expInfo" style="margin:0 0 8px" aria-live="polite"></p>
       <label class="chk" style="display:flex;gap:8px;align-items:center;font-size:12.5px;margin-bottom:10px"><input type="checkbox" id="expMinW"><span>Only ties currently shown (strength ≥ <span id="expMinWv">1</span>)</span></label>
-      <div class="row" style="margin:0;gap:8px;justify-content:flex-start"><button type="button" class="btn" id="expGraphml">GraphML</button><button type="button" class="btn" id="expCsv">CSV (.zip)</button></div>
+      <div class="row" style="margin:0;gap:8px;justify-content:flex-start"><button type="button" class="btn" id="expGraphml">GraphML</button><button type="button" class="btn" id="expCsv">CSV (.zip)</button><button type="button" class="btn" id="expPng" data-tip="PNG image of the graph exactly as it is on screen (layout, zoom, labels, highlight), saved at 300 dpi.">PNG (300 dpi)</button></div>
+      <label class="chk" style="display:flex;gap:8px;align-items:center;font-size:12.5px;margin:12px 0 4px"><input type="checkbox" id="expPngLegend" checked><span>Add legend and filters to the PNG</span></label>
+      <p class="hint" id="expPngInfo" style="margin:0" aria-live="polite"></p>
     </section>
 
     <section>
@@ -629,12 +633,13 @@ body.busy .busyspin{display:flex}
   </div></div></div>
   <div class="view" id="v-centrality"><div class="page"><div class="wrap">
     <h1 class="ptitle">Organization centrality</h1>
-    <p class="psub">Ranking of the organizations by degree, betweenness and eigenvector centrality in the current network, so it follows the category filter. Click an organization to open its profile. Organizations without ties in the view are not ranked; clear “Hide organizations without ties” to list them at the end.</p>
+    <p class="psub">Ranking of the organizations by degree, betweenness and eigenvector centrality in the current network, so it follows the category filter. Choose whether every tie counts the same (unweighted) or a stronger tie counts more (weighted). Click an organization to open its profile. Organizations without ties in the view are not ranked; clear “Hide organizations without ties” to list them at the end.</p>
     <div class="scopebar"><b class="scopetitle">Filtering the network</b><span class="info" tabindex="0" role="img" aria-label="About filtering the network" data-tip="&lt;b&gt;Filtering the network&lt;/b&gt;&lt;div&gt;Build the network from the group of discourses you choose. The baseline is “All”, where organizations are tied through all discourses. Select “Concepts” to build the ties using only concept discourses; “Solutions” works in the same way. Use “Customize…” to pick individual categories.&lt;/div&gt;">i</span>
       <div class="seg presetSeg"><button data-p="all" class="on">All</button><button data-p="VP" title="Main policy beliefs">Policy beliefs (VP)</button><button data-p="VCE" title="State capacity beliefs">Capacity beliefs (VCE)</button><button data-p="FDRM" title="Phase of disaster risk reduction">Risk phase (FDRM)</button><button data-p="solution">Solutions</button></div>
       <span class="scopetxt note"></span><button class="btn scopecustom">Customize…</button>
       <label class="chk scopeiso" style="display:flex;gap:6px;align-items:center;font-size:12.5px"><input type="checkbox" class="hideIsoBox" checked> Hide organizations without ties</label></div>
     <div class="ctrl">
+      <label>Calculation <span class="seg centWseg" role="group" aria-label="Centrality calculation" style="width:250px;max-width:100%;flex:none" data-tip="&lt;b&gt;Calculation&lt;/b&gt;&lt;div&gt;&lt;b&gt;Unweighted:&lt;/b&gt; every tie counts the same, however strong. Degree is the number of ties, betweenness counts hops, eigenvector treats all ties equally.&lt;/div&gt;&lt;div style=&quot;margin-top:6px&quot;&gt;&lt;b&gt;Weighted:&lt;/b&gt; a stronger tie counts more. Weighted degree is the sum of tie strengths, weighted betweenness finds the shortest paths when strong ties are short (length = 1 ÷ strength), and weighted eigenvector gives more weight to strong ties. Tie strength is the overlap of two organizations’ mentions in the selected categories.&lt;/div&gt;"><button type="button" data-w="0">Unweighted</button><button type="button" data-w="1" class="on">Weighted</button></span></label>
       <label>Show <select id="centTop"><option value="10">Top 10</option><option value="15" selected>Top 15</option><option value="25">Top 25</option><option value="9999">All</option></select></label>
       <label>Community <select id="centComm"></select></label>
     </div>
@@ -703,7 +708,8 @@ document.getElementById("sM").textContent = DATA.modularity.toFixed(2);
 
 /* ---------- state ---------- */
 const state = {minW:(uniqW.find(w => links.filter(l => l.w >= w).length <= 1500) ?? uniqW[0]), sizeBy:"wdeg", hideIso:true, resolution:1, commHover:null, labels:"auto", layout:"free", hover:null, selected:null, comm:null, query:""};
-const canvas = document.getElementById("cv"), ctx = canvas.getContext("2d");
+let canvas = document.getElementById("cv"), ctx = canvas.getContext("2d");
+const mainCanvas = canvas, mainCtx = ctx;
 const stage = document.getElementById("stage");
 const tip = document.getElementById("tip");
 let W = 0, H = 0, dpr = 1, T = d3.zoomIdentity;
@@ -1026,6 +1032,7 @@ function resize(){
   W = r.width; H = r.height; dpr = window.devicePixelRatio || 1;
   canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
   draw();
+  if (typeof updatePngInfo === "function") updatePngInfo();
 }
 function fitView(animate){
   const vis = nodes.filter(isVisible); if (!vis.length) return;
@@ -1355,12 +1362,22 @@ function aggregate(members){
   }
   return {cnt, tm, nWith, pool, tot: d3.sum(TYPES, t => tm[t.k])};
 }
-let NET = null;
+let NET = null, NETDENS = null, NETMEAN = null;
 function refreshViewStats(){
   NET = aggregate(nodes.filter(n => n.cc >= 0));
+  // density of similarity: share of all possible pairs of organizations that are tied (they share at least one category)
+  const nIn = nodes.filter(n => n.cc >= 0).length;
+  const netLinks = links.filter(l => l.source.cc >= 0 && l.target.cc >= 0);
+  NETDENS = nIn > 1 ? netLinks.length / (nIn * (nIn - 1) / 2) : null;
+  NETMEAN = nIn > 1 ? d3.sum(netLinks, l => l.w) / (nIn * (nIn - 1) / 2) : null;
   vcomms.forEach(c => {
     c.agg = aggregate(c.members);
-    const intra = d3.sum(links.filter(l => l.source.cc === c.id && l.target.cc === c.id), l => l.w);
+    const inLinks = links.filter(l => l.source.cc === c.id && l.target.cc === c.id), pairs = c.members.length * (c.members.length - 1) / 2;
+    c.inTies = inLinks.length; c.pairs = pairs;
+    c.density = pairs ? c.inTies / pairs : null;
+    c.meanTie = pairs ? d3.sum(inLinks, l => l.w) / pairs : null;                    // per possible pair (untied pairs count 0)
+    c.meanTied = inLinks.length ? d3.sum(inLinks, l => l.w) / inLinks.length : null;   // per tied pair only
+    const intra = d3.sum(inLinks, l => l.w);
     const ext = d3.sum(links.filter(l => (l.source.cc === c.id) !== (l.target.cc === c.id)), l => l.w);
     c.cohesion = (intra + ext) ? (2*intra) / (2*intra + ext) : 0;
     c.avgDeg = d3.mean(c.members, n => n.deg) || 0;
@@ -1659,9 +1676,10 @@ function renderComm(){
     <div class="ctitle" style="--c:${col}"><i></i>Community ${c.id+1}</div>
     <div class="metrics">
       <div class="metric" data-tip="${tipAttr("Organizations", "Number of organizations assigned to this community by the Louvain method.")}"><b>${c.members.length}</b><small>Organizations</small></div>
-      <div class="metric" data-tip="${tipAttr("Tie strength kept inside", "Share of the members’ total tie weight that connects them to other members of the same community. Higher = more closed in on itself.")}"><b>${Math.round(c.cohesion*100)}%</b><small>Tie strength kept inside</small></div>
       <div class="metric" data-tip="${tipAttr("Average connections", "Mean number of direct connections per member, counting ties to any organization in the network.")}"><b>${c.avgDeg.toFixed(1)}</b><small>Average connections</small></div>
-      <div class="metric" data-tip="${tipAttr("Mentions", "Total number of " + scopeName + "mentions made by the members of this community.", S === "all" ? TYPES.filter(t => types.includes(t.k)).map(t => `<div class="tv"><span>${t.title}</span><span>${a.tm[t.k]}</span></div>`).join("") : "")}"><b>${scopeTot}</b><small>${scopeName ? scopeName[0].toUpperCase() + scopeName.slice(1) : ""}mentions</small></div>
+      <div class="metric" data-tip="${tipAttr("Density of similarity", "How close the community is to having every member similar to every other: the share of all possible pairs of its members that are tied, meaning they share at least one mention category. 1.00 = every pair is similar, 0 = no pair is.", c.density === null ? "" : `<div class="tv"><span>Pairs tied</span><span>${fmt.format(c.inTies)} of ${fmt.format(c.pairs)} (${pct(c.density)})</span></div><div class="tv"><span>Whole network view</span><span>${NETDENS === null ? "—" : NETDENS.toFixed(2)}</span></div><div class="tv"><span>Tie strength kept inside</span><span>${Math.round(c.cohesion*100)}%</span></div><div class="hint2">Read it against the network: most pairs of organizations are similar, so a community is dense when it is clearly above the whole network.</div>`)}"><b>${c.density === null ? "—" : c.density.toFixed(2)}</b><small>Density of similarity${NETDENS === null || c.density === null ? "" : ` <span style="opacity:.75">· network ${NETDENS.toFixed(2)}</span>`}</small></div>
+      <div class="metric" data-tip="${tipAttr("Average tie strength", "Total tie strength among the members divided by all their possible pairs, where pairs that are not tied count as 0. It is the weighted counterpart of density: it combines how many pairs are similar and how strongly. Tie strength is the overlap of two organizations’ mentions in the selected categories.", c.meanTie === null ? "" : `<div class="tv"><span>Tied pairs only</span><span>${c.meanTied === null ? "—" : c.meanTied.toFixed(1)}</span></div><div class="tv"><span>Whole network view</span><span>${NETMEAN === null ? "—" : NETMEAN.toFixed(1)}</span></div><div class="hint2">Read it against the network: a value clearly above the network average means the members are more similar to each other than organizations are in general.</div>`)}"><b>${c.meanTie === null ? "—" : c.meanTie.toFixed(1)}</b><small>Average tie strength${NETMEAN === null || c.meanTie === null ? "" : ` <span style="opacity:.75">· network ${NETMEAN.toFixed(1)}</span>`}</small></div>
+      <div class="metric wide" data-tip="${tipAttr("Mentions", "Total number of " + scopeName + "mentions made by the members of this community.", S === "all" ? TYPES.filter(t => types.includes(t.k)).map(t => `<div class="tv"><span>${t.title}</span><span>${a.tm[t.k]}</span></div>`).join("") : "")}"><b>${scopeTot}</b><small>${scopeName ? scopeName[0].toUpperCase() + scopeName.slice(1) : ""}mentions</small></div>
     </div>
     <p class="note" style="margin:0">Members with mentions: ${withNote}.</p>
     <h4 data-tip="${tipAttr("Types of organization", "Who is inside this community: the share of its organizations of each type (government, business, civil society, science &amp; academia, international, councils &amp; consortia), from the attribute file. The thin bar below shows the same mix for all organizations in the current view. Hover a segment or a legend item to see the members.")}">Types of organization</h4>
@@ -1945,18 +1963,36 @@ function updateAttrStatus(){
   attrStatus.textContent = on ? `${on} of ${nodes.length} organizations match.` + (missing ? ` ${missing} without recorded attributes are left out.` : "") : "No organization matches. Clear a selection to continue.";
 }
 
-function betweenness(){
+function betweenness(weighted){
+  // Brandes' algorithm. Unweighted: shortest paths counted in hops. Weighted: a tie is as long as 1 / its strength, so
+  // stronger ties make shorter paths (Dijkstra with a binary heap). Both normalised by (N-1)(N-2), 0 to 1.
   const N = nodes.length, bc = new Float64Array(N), nbr = nodes.map(() => []);
-  links.forEach(l => { nbr[l.source.ix].push(l.target.ix); nbr[l.target.ix].push(l.source.ix); });
+  links.forEach(l => { const d = weighted ? 1 / l.w : 1; nbr[l.source.ix].push([l.target.ix, d]); nbr[l.target.ix].push([l.source.ix, d]); });
   for (let s = 0; s < N; s++){
     if (!nbr[s].length) continue;
-    const stack = [], pred = Array.from({length: N}, () => []), sigma = new Float64Array(N), dist = new Int32Array(N).fill(-1), delta = new Float64Array(N);
-    sigma[s] = 1; dist[s] = 0; const queue = [s];
-    for (let qi = 0; qi < queue.length; qi++){
-      const v = queue[qi]; stack.push(v);
-      for (const w of nbr[v]){
-        if (dist[w] < 0){ dist[w] = dist[v] + 1; queue.push(w); }
-        if (dist[w] === dist[v] + 1){ sigma[w] += sigma[v]; pred[w].push(v); }
+    const stack = [], pred = Array.from({length: N}, () => []), sigma = new Float64Array(N), delta = new Float64Array(N), dist = new Float64Array(N).fill(Infinity), done = new Uint8Array(N);
+    sigma[s] = 1; dist[s] = 0;
+    if (!weighted){
+      const queue = [s];
+      for (let qi = 0; qi < queue.length; qi++){
+        const v = queue[qi]; stack.push(v);
+        for (const [w] of nbr[v]){
+          if (dist[w] === Infinity){ dist[w] = dist[v] + 1; queue.push(w); }
+          if (dist[w] === dist[v] + 1){ sigma[w] += sigma[v]; pred[w].push(v); }
+        }
+      }
+    } else {
+      const heap = [[0, s]];
+      const push = it => { heap.push(it); let i = heap.length - 1; while (i > 0){ const q = (i - 1) >> 1; if (heap[q][0] <= heap[i][0]) break; [heap[q], heap[i]] = [heap[i], heap[q]]; i = q; } };
+      const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length){ heap[0] = last; let i = 0; for (;;){ let m = i; const l = 2*i + 1, r = l + 1; if (l < heap.length && heap[l][0] < heap[m][0]) m = l; if (r < heap.length && heap[r][0] < heap[m][0]) m = r; if (m === i) break; [heap[m], heap[i]] = [heap[i], heap[m]]; i = m; } } return top; };
+      while (heap.length){
+        const [dv, v] = pop(); if (done[v]) continue; done[v] = 1; stack.push(v);
+        for (const [w, d] of nbr[v]){
+          if (done[w]) continue;
+          const alt = dv + d, tol = 1e-9 * Math.max(1, alt);
+          if (alt < dist[w] - tol){ dist[w] = alt; sigma[w] = sigma[v]; pred[w] = [v]; push([alt, w]); }
+          else if (Math.abs(alt - dist[w]) <= tol){ sigma[w] += sigma[v]; pred[w].push(v); }
+        }
       }
     }
     while (stack.length){
@@ -2120,10 +2156,10 @@ document.getElementById("res").oninput = e => {
 };
 
 /* ---------- eigenvector centrality + rankings ---------- */
-function eigenvector(){
-  // power iteration on (A + I) with A weighted by tie strength; scaled so the most central actor = 1
+function eigenvector(weighted = true){
+  // power iteration on (A + I); A holds tie strengths (weighted) or 1 for every tie (unweighted); scaled so the most central organization = 1
   const N = nodes.length, A = nodes.map(() => new Float64Array(N));
-  links.forEach(l => { A[l.source.ix][l.target.ix] = l.w; A[l.target.ix][l.source.ix] = l.w; });
+  links.forEach(l => { const v = weighted ? l.w : 1; A[l.source.ix][l.target.ix] = v; A[l.target.ix][l.source.ix] = v; });
   let x = Float64Array.from(nodes, n => n.deg > 0 ? 1 : 0);
   if (!x.some(v => v)) return x;
   for (let it = 0; it < 3000; it++){
@@ -2135,20 +2171,29 @@ function eigenvector(){
   }
   return x;
 }
-const CENT = [
-  {k:"deg", title:"Degree", sub:"Number of direct ties", fmt: v => String(v),
-   tip: "Number of organizations this one is directly tied to in the current network. Shown relative to the maximum possible in the second line."},
-  {k:"bc",  title:"Betweenness", sub:"Position on shortest paths", fmt: v => v.toFixed(4),
+const CENT_ALL = [
+  {k:"deg",  w:false, title:"Degree", sub:"Number of direct ties", fmt: v => String(v),
+   tip: "Number of organizations this one is directly tied to in the current network; every tie counts the same, however strong. Shown relative to the maximum possible in the second line."},
+  {k:"bc",   w:false, title:"Betweenness", sub:"Position on shortest paths", fmt: v => v.toFixed(4),
    tip: "How often the organization lies on the shortest path (counting hops, not tie strength) between two other organizations. Normalised to 0–1. High values mark brokers that connect otherwise distant parts of the network."},
-  {k:"ev",  title:"Eigenvector", sub:"Ties to well-connected organizations", fmt: v => v.toFixed(3),
-   tip: "Importance that comes from being tied to other important organizations. Computed with tie strength as weights and scaled so the top organization = 1."}
+  {k:"evb",  w:false, title:"Eigenvector", sub:"Ties to well-connected organizations", fmt: v => v.toFixed(3),
+   tip: "Importance that comes from being tied to other important organizations, with every tie counting the same regardless of its strength. Scaled so the top organization = 1."},
+  {k:"wdeg", w:true,  title:"Weighted degree", sub:"Total tie strength", fmt: v => fmt.format(v),
+   tip: "The sum of the strengths of all the organization’s ties in the current network. Degree only counts how many organizations it is tied to; this also reflects how strong those ties are (the overlap of the two organizations’ mentions in the selected categories)."},
+  {k:"bcw",  w:true,  title:"Weighted betweenness", sub:"Position on strongest-tie paths", fmt: v => v.toFixed(4),
+   tip: "How often the organization lies on the shortest path between two other organizations when stronger ties make paths shorter (a tie is as long as 1 ÷ its strength). Normalised to 0–1 like betweenness. High values mark brokers that connect distant parts of the network through strong ties."},
+  {k:"ev",   w:true,  title:"Weighted eigenvector", sub:"Strong ties to well-connected organizations", fmt: v => v.toFixed(3),
+   tip: "Importance that comes from being tied to other important organizations, with tie strength as the weight, so strong ties to important organizations count most. Scaled so the top organization = 1."}
 ];
+let centW = true;                                   // calculation shown in the Centrality tab and the profile tiles: weighted (true) or unweighted
+const centDefs = () => CENT_ALL.filter(m => m.w === centW);
 let centMax = {}, centN = 0;
 function computeCentralityExtras(){
-  const ev = eigenvector(); nodes.forEach((n, i) => { n.ev = ev[i]; });
+  const ev = eigenvector(true), evb = eigenvector(false), bcw = betweenness(true);
+  nodes.forEach((n, i) => { n.ev = ev[i]; n.evb = evb[i]; n.bcw = +bcw[i].toFixed(4); });
   const R = nodes.filter(n => n.deg > 0); centN = R.length;
   nodes.forEach(n => { n.rk = {}; });
-  CENT.forEach(m => {
+  CENT_ALL.forEach(m => {
     centMax[m.k] = d3.max(R, n => n[m.k]) || 0;
     R.forEach(n => { n.rk[m.k] = 1 + R.filter(o => o[m.k] > n[m.k] + 1e-9).length; });   // ties share a rank
   });
@@ -2179,7 +2224,7 @@ function applyCategoryFilter(){
   links.forEach(l => { adj.get(l.source.id).push({n: l.target, w: l.w}); adj.get(l.target.id).push({n: l.source, w: l.w}); });
   nodes.forEach(n => { n.deg = 0; n.wdeg = 0; });
   links.forEach(l => { l.source.deg++; l.target.deg++; l.source.wdeg += l.w; l.target.wdeg += l.w; });
-  const bc = betweenness(); nodes.forEach((n, i) => { n.bc = +bc[i].toFixed(4); });
+  const bc = betweenness(false); nodes.forEach((n, i) => { n.bc = +bc[i].toFixed(4); });
   computeCentralityExtras();
   state.minW = uniqW.find(w => links.filter(l => l.w >= w).length <= 1500) ?? uniqW[0] ?? 1;
   minw.max = Math.max(0, uniqW.length - 1); minw.value = Math.max(0, uniqW.indexOf(state.minW));
@@ -2212,8 +2257,10 @@ const NODE_COLS = [
   {name: "community_full_network", type: "int",    note: "Community in the full, unfiltered network",              get: n => n.c + 1},
   {name: "connections",     type: "int",    note: "Number of ties in the filtered network",                        get: n => n.deg},
   {name: "weighted_degree", type: "double", note: "Sum of tie strengths in the filtered network",                  get: n => n.wdeg},
-  {name: "betweenness",     type: "double", note: "Betweenness centrality in the filtered network",                get: n => fin(n.bc, 4)},
-  {name: "eigenvector",     type: "double", note: "Eigenvector centrality (top organization = 1)",                 get: n => fin(n.ev, 6)},
+  {name: "betweenness",     type: "double", note: "Betweenness centrality in the filtered network (shortest paths counted in hops)", get: n => fin(n.bc, 4)},
+  {name: "betweenness_weighted", type: "double", note: "Weighted betweenness: shortest paths where a tie is as long as 1 / its strength", get: n => fin(n.bcw, 4)},
+  {name: "eigenvector",     type: "double", note: "Eigenvector centrality weighted by tie strength (top organization = 1)", get: n => fin(n.ev, 6)},
+  {name: "eigenvector_unweighted", type: "double", note: "Eigenvector centrality with every tie counting the same (top organization = 1)", get: n => fin(n.evb, 6)},
   {name: "mentions",        type: "int",    note: "Mentions in the categories selected in the network filter",     get: n => n.m},
   {name: "x",               type: "double", note: "Position in the current layout",                                get: n => fin(n.x, 2)},
   {name: "y",               type: "double", note: "Position in the current layout (vertical axis flipped so it looks the same in Gephi)", get: n => fin(-n.y, 2)},
@@ -2310,8 +2357,85 @@ function updateExportInfo(){
   const es = onlyShown ? links.filter(l => l.w >= state.minW).length : links.length;
   document.getElementById("expMinWv").textContent = state.minW;
   el.textContent = ns ? `${fmt.format(ns)} organizations · ${fmt.format(es)} ties will be exported.` : "Nothing to export: no organization matches the filters.";
-  document.getElementById("expGraphml").disabled = document.getElementById("expCsv").disabled = !ns;
+  document.getElementById("expGraphml").disabled = document.getElementById("expCsv").disabled = document.getElementById("expPng").disabled = !ns;
+  if (typeof updatePngInfo === "function") updatePngInfo();
 }
+/* ================= PNG image of the network (300 dpi) ================= */
+const PNG_DPI = 300, PNG_SCALE = PNG_DPI / 96, PNG_MAX_SIDE = 16000, PNG_MAX_PIXELS = 120e6;
+const PNG_FONT = '-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif';
+function pngFooterLayout(m, width){            // m: a 2d context used only to measure text (CSS px); returns what to draw and how tall it is
+  const pad = 14, lh = 17, mut = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim() || "#666";
+  m.font = `12px ${PNG_FONT}`;
+  const wrap = (txt, maxW) => { const out = []; let line = ""; txt.split(" ").forEach(w => { const t = line ? line + " " + w : w; if (m.measureText(t).width > maxW && line){ out.push(line); line = w; } else line = t; }); if (line) out.push(line); return out; };
+  const items = vcomms.map(c => ({color: color(c.id), text: `Community ${c.id + 1} · ${c.members.length}`}));
+  const rows = []; let row = [], x = pad;
+  items.forEach(it => { const w = 14 + m.measureText(it.text).width + 22; if (x + w > width - pad && row.length){ rows.push(row); row = []; x = pad; } row.push({...it, x}); x += w; });
+  if (row.length) rows.push(row);
+  const shown = links.filter(l => l.w >= state.minW).length, nOrg = nodes.filter(isVisible).length;
+  const sizeTxt = document.getElementById("size").selectedOptions[0].textContent.toLowerCase();
+  const info = [
+    `Network filter: ${catLabel()}.`,
+    `Organization filter: ${attrActive() ? attrLabel() : "none"}.`,
+    `${nOrg} organizations · ${fmt.format(shown)} of ${fmt.format(links.length)} ties shown (strength ≥ ${state.minW}) · node size: ${sizeTxt}.`
+  ].flatMap(t => wrap(t, width - 2 * pad));
+  const stamp = `Organization Network Explorer · ${new Date().toISOString().slice(0, 10)}`;
+  return {pad, lh, mut, rows, info, stamp, height: pad + rows.length * lh + 8 + info.length * lh + 6 + lh + pad - 4};
+}
+function pngPlan(){
+  const withLegend = document.getElementById("expPngLegend").checked;
+  const m = document.createElement("canvas").getContext("2d");
+  const footer = withLegend ? pngFooterLayout(m, W) : null, hCss = H + (footer ? footer.height : 0);
+  let scale = PNG_SCALE;
+  scale = Math.min(scale, PNG_MAX_SIDE / Math.max(W, hCss), Math.sqrt(PNG_MAX_PIXELS / (W * hCss)));   // a very large window cannot exceed what browsers can allocate
+  return {scale, dpi: Math.round(scale * 96), wpx: Math.round(W * scale), hpx: Math.round(hCss * scale), footer, hCss, cmW: W / 96 * 2.54, cmH: hCss / 96 * 2.54};
+}
+let crcTable = null;
+function crc32b(d){ if (!crcTable){ crcTable = new Uint32Array(256); for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; crcTable[n] = c >>> 0; } }
+  let c = 0xFFFFFFFF; for (let i = 0; i < d.length; i++) c = crcTable[(c ^ d[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function pngSetDpi(bytes, dpi){                // insert a pHYs chunk (pixels per metre) right after IHDR, so print software reads the resolution
+  const sig = [137, 80, 78, 71, 13, 10, 26, 10]; if (!sig.every((v, i) => bytes[i] === v)) return bytes;
+  const ppm = Math.round(dpi / 0.0254), chunk = new Uint8Array(21), dv = new DataView(chunk.buffer);
+  dv.setUint32(0, 9); chunk.set([0x70, 0x48, 0x59, 0x73], 4); dv.setUint32(8, ppm); dv.setUint32(12, ppm); chunk[16] = 1; dv.setUint32(17, crc32b(chunk.subarray(4, 17)));
+  const at = 8 + 4 + 4 + 13 + 4, out = new Uint8Array(bytes.length + 21);
+  out.set(bytes.subarray(0, at)); out.set(chunk, at); out.set(bytes.subarray(at), at + 21); return out;
+}
+function renderToCanvas(off, scale){           // run the normal drawing code against another canvas at another pixel density
+  const sv = {c: canvas, x: ctx, d: dpr};
+  canvas = off; ctx = off.getContext("2d"); dpr = scale;
+  try { render(); } finally { canvas = sv.c; ctx = sv.x; dpr = sv.d; }
+}
+function exportPng(){
+  const plan = pngPlan(), off = document.createElement("canvas");
+  off.width = plan.wpx; off.height = plan.hpx;
+  renderToCanvas(off, plan.scale);
+  const x = off.getContext("2d");
+  x.setTransform(1, 0, 0, 1, 0, 0);
+  x.globalCompositeOperation = "destination-over"; x.fillStyle = C.bg; x.fillRect(0, 0, off.width, off.height); x.globalCompositeOperation = "source-over";   // the screen shows the page colour behind the graph
+  if (plan.footer){
+    const f = plan.footer, sc = plan.scale; x.setTransform(sc, 0, 0, sc, 0, H * sc);
+    x.strokeStyle = f.mut; x.globalAlpha = .35; x.lineWidth = 1 / sc; x.beginPath(); x.moveTo(f.pad, .5); x.lineTo(W - f.pad, .5); x.stroke(); x.globalAlpha = 1;
+    x.textBaseline = "middle"; x.textAlign = "left"; x.font = `12px ${PNG_FONT}`;
+    let y = f.pad + f.lh / 2;
+    f.rows.forEach(r => { r.forEach(it => { x.fillStyle = it.color; x.beginPath(); x.arc(it.x + 6, y, 5.5, 0, Math.PI * 2); x.fill(); x.fillStyle = C.text; x.fillText(it.text, it.x + 18, y); }); y += f.lh; });
+    y += 8; x.fillStyle = C.text; f.info.forEach(t => { x.fillText(t, f.pad, y); y += f.lh; });
+    y += 6; x.fillStyle = f.mut; x.font = `11px ${PNG_FONT}`; x.fillText(f.stamp, f.pad, y);
+  }
+  draw();                                       // put the on-screen state back (hint text, label list)
+  off.toBlob(async blob => {
+    const bytes = pngSetDpi(new Uint8Array(await blob.arrayBuffer()), plan.dpi), d = new Date(), pad2 = v => String(v).padStart(2, "0");
+    downloadBlob(new Blob([bytes], {type: "image/png"}), `organization-network_${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}_${plan.dpi}dpi.png`);
+  }, "image/png");
+}
+var pngReady = false;                           // set once everything the PNG hint reads has been initialised
+function updatePngInfo(){
+  const el = document.getElementById("expPngInfo"); if (!el || !W || !pngReady) return;
+  const p = pngPlan();
+  el.textContent = `PNG: ${fmt.format(p.wpx)} × ${fmt.format(p.hpx)} px · ${p.cmW.toFixed(1)} × ${p.cmH.toFixed(1)} cm at ${p.dpi} dpi` + (p.dpi < PNG_DPI ? " (reduced: the window is very large)" : "") + ".";
+}
+document.getElementById("expPng").onclick = exportPng;
+document.getElementById("expPngLegend").onchange = updatePngInfo;
+window.addEventListener("resize", updatePngInfo);
+pngReady = true; updatePngInfo();
 document.getElementById("expMinW").onchange = updateExportInfo;
 document.getElementById("expGraphml").onclick = () => { const S = exportSnapshot(); downloadBlob(buildGraphML(S), exportName(S, "graphml")); };
 document.getElementById("expCsv").onclick = () => { const S = exportSnapshot(); downloadBlob(makeZip(buildCsvFiles(S)), exportName(S, "zip").replace(".zip", "_csv.zip")); };
@@ -2466,7 +2590,7 @@ catStatus.textContent = `${fmt.format(links.length)} ties among ${nodes.length} 
 /* ---------- centrality: organization panel and ranking page ---------- */
 function renderOrgCent(n){
   const el = document.getElementById("oCent"), ties = n.deg > 0;
-  const tiles = CENT.map(m => {
+  const tiles = centDefs().map(m => {
     const v = n[m.k], mx = centMax[m.k] || 1, rk = ties ? n.rk[m.k] : null;
     const extra = m.k === "deg" ? `${Math.round(100*n.deg/Math.max(1, nodes.length - 1))}% of possible ties` : m.sub;
     const tip = tipAttr(m.title + " centrality", m.tip, `<div class="tv"><span>${esc(n.name)}</span><span>${m.fmt(v)}</span></div>` +
@@ -2475,8 +2599,9 @@ function renderOrgCent(n){
       (m.k === "deg" ? `<div class="tv"><span>Weighted degree</span><span>${fmt.format(n.wdeg)}</span></div>` : ""));
     return `<div class="ctile" style="--c:${color(n.cc)}" data-tip="${tip}"><small>${m.title}</small><b>${m.fmt(v)}</b><span class="rkline">${ties ? `#${rk} of ${centN} · ${extra}` : noCommTxt(n)}</span><div class="mini"><i style="width:${Math.min(100, 100*v/mx)}%"></i></div></div>`;
   }).join("");
-  el.innerHTML = `<h4 style="margin-top:4px">Centrality in the current network <button class="btn" id="oCentGo" style="margin-left:8px;padding:3px 9px;font-size:11.5px;text-transform:none;letter-spacing:0">See all rankings</button></h4><div class="ctiles">${tiles}</div><div style="height:6px"></div>`;
+  el.innerHTML = `<h4 style="margin-top:4px">Centrality in the current network <span class="seg centWseg" role="group" aria-label="Centrality calculation" style="display:inline-flex;min-width:0;margin-left:6px;vertical-align:middle;text-transform:none;letter-spacing:0"><button type="button" data-w="0">Unweighted</button><button type="button" data-w="1">Weighted</button></span> <button class="btn" id="oCentGo" style="margin-left:8px;padding:3px 9px;font-size:11.5px;text-transform:none;letter-spacing:0">See all rankings</button></h4><div class="ctiles">${tiles}</div><div style="height:6px"></div>`;
   document.getElementById("oCentGo").onclick = () => go("centrality");
+  syncCentW();
 }
 
 const centTop = document.getElementById("centTop"), centComm = document.getElementById("centComm"), centCols = document.getElementById("centCols");
@@ -2488,21 +2613,21 @@ function buildCentCommSelect(){
 function renderCentrality(){
   const top = +centTop.value, cf = centComm.value, R = nodes.filter(n => n.deg > 0);
   if (!R.length){ centCols.innerHTML = '<div class="card empty" style="grid-column:1/-1">No organizations have ties in this view. Select categories that create ties.</div>'; return; }
-  centCols.innerHTML = CENT.map(m => {
+  centCols.innerHTML = centDefs().map(m => {
     let list = R.slice().sort((a, b) => b[m.k] - a[m.k] || b.wdeg - a.wdeg || a.name.localeCompare(b.name));
     if (cf !== "") list = list.filter(n => n.cc === +cf);
     if (!state.hideIso) list = list.concat(nodes.filter(n => n.on !== false && n.deg === 0 && (cf === "" || n.cc === +cf)).sort((a, b) => a.name.localeCompare(b.name)));
     const shown = list.slice(0, top), mx = centMax[m.k] || 1;
     const rows = shown.map(n => {
       const tip = tipAttr(esc(n.name), n.cc < 0 ? "" : "Community " + (n.cc + 1),
-        CENT.map(k => `<div class="tv"><span>${k.title}</span><span>${k.fmt(n[k.k])}${n.rk[k.k] ? " · #" + n.rk[k.k] : ""}</span></div>`).join("") +
-        `<div class="tv"><span>Weighted degree</span><span>${fmt.format(n.wdeg)}</span></div><div class="hint2">Click to open the organization profile.</div>`);
+        centDefs().map(k => `<div class="tv"><span>${k.title}</span><span>${k.fmt(n[k.k])}${n.rk[k.k] ? " · #" + n.rk[k.k] : ""}</span></div>`).join("") +
+        (centW ? "" : `<div class="tv"><span>Weighted degree</span><span>${fmt.format(n.wdeg)}</span></div>`) + `<div class="hint2">Click to open the organization profile.</div>`);
       return `<div class="crow${n === oSel ? " sel" : ""}" role="button" tabindex="0" data-id="${n.id}" data-tip="${tip}"><span class="rk">${n.rk[m.k] ? "#" + n.rk[m.k] : "—"}</span><span class="nm"><i style="background:${color(n.cc)}"></i>${esc(n.name)}</span><div class="btrack"><div class="bfill" style="width:${Math.min(100, 100*n[m.k]/mx)}%;background:${color(n.cc)}"></div></div><span class="bval">${m.fmt(n[m.k])}</span></div>`;
     }).join("");
     return `<div class="card centcol"><h3 data-tip="${tipAttr(m.title + " centrality", m.tip)}">${m.title}</h3><p class="note">${m.sub} · showing ${shown.length} of ${list.length}${cf !== "" ? " in Community " + (+cf + 1) : ""}</p>${rows || '<div class="empty small">No organizations.</div>'}</div>`;
   }).join("");
 }
-let centView = "cards", centSort = {key: "deg", dir: -1};
+let centView = "cards", centSort = {key: "wdeg", dir: -1};
 document.querySelectorAll("#centView button").forEach(b => b.onclick = () => {
   centView = b.dataset.v;
   document.querySelectorAll("#centView button").forEach(x => x.classList.toggle("on", x.dataset.v === centView));
@@ -2524,19 +2649,22 @@ function renderCentTable(){
   const cols = [
     {k:"name", label:"Organization", cls:"nm"}, {k:"comm", label:"Community"},
     {k:"deg", label:"Degree"}, {k:"wdeg", label:"W. degree"},
-    {k:"bc", label:"Betweenness"}, {k:"ev", label:"Eigenvector"}
+    {k:"bc", label:"Betweenness"}, {k:"bcw", label:"W. betweenness"},
+    {k:"evb", label:"Eigenvector"}, {k:"ev", label:"W. eigenvector"}
   ];
   const head = cols.map(c => `<th class="${c.cls || ""}${centSort.key === c.k ? " sorted" : ""}" data-k="${c.k}">${c.label}${centSort.key === c.k ? (centSort.dir < 0 ? " ↓" : " ↑") : ""}</th>`).join("");
   const body = rows.map(n => `<tr data-id="${n.id}">
     <td class="nm"><span class="dot" style="background:${color(n.cc)}"></span>${esc(n.name)}</td>
     <td>${n.cc < 0 ? "—" : (n.cc + 1)}</td>
     <td><span class="rk">#${n.rk.deg}</span> ${n.deg}</td>
-    <td>${fmt.format(n.wdeg)}</td>
+    <td><span class="rk">#${n.rk.wdeg}</span> ${fmt.format(n.wdeg)}</td>
     <td><span class="rk">#${n.rk.bc}</span> ${n.bc.toFixed(4)}</td>
+    <td><span class="rk">#${n.rk.bcw}</span> ${n.bcw.toFixed(4)}</td>
+    <td><span class="rk">#${n.rk.evb}</span> ${n.evb.toFixed(3)}</td>
     <td><span class="rk">#${n.rk.ev}</span> ${n.ev.toFixed(3)}</td></tr>`).join("");
   const wrap = document.getElementById("centTableWrap");
   wrap.innerHTML = R.length
-    ? `<div class="card"><p class="note" style="margin:0 0 10px">Showing ${rows.length} of ${R.length} organizations${cf !== "" ? " in Community " + (+cf + 1) : ""} · click a header to sort, a row to open the profile. Ranks are network-wide.</p><div class="ctable-scroll"><table class="ctable"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div></div>`
+    ? `<div class="card"><p class="note" style="margin:0 0 10px">Showing ${rows.length} of ${R.length} organizations${cf !== "" ? " in Community " + (+cf + 1) : ""} · click a header to sort, a row to open the profile. The table shows both calculations (W. = weighted by tie strength). Ranks are network-wide.</p><div class="ctable-scroll"><table class="ctable"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div></div>`
     : '<div class="card empty">No organizations have ties in this view.</div>';
   wrap.querySelectorAll("th").forEach(th => th.onclick = () => {
     const k = th.dataset.k;
@@ -2548,6 +2676,9 @@ function renderCentTable(){
 const _renderCentCards = renderCentrality;
 renderCentrality = function(){ if (centView === "table") renderCentTable(); else _renderCentCards(); };
 centTop.onchange = renderCentrality; centComm.onchange = renderCentrality;
+function syncCentW(){ document.querySelectorAll(".centWseg button").forEach(b => b.classList.toggle("on", (b.dataset.w === "1") === centW)); }
+function setCentW(v){ centW = v; syncCentW(); if (current === "organizations") renderOrg(); else renderCentrality(); }
+document.addEventListener("click", e => { const b = e.target.closest(".centWseg button"); if (b) setCentW(b.dataset.w === "1"); });
 centCols.addEventListener("click", e => { const r = e.target.closest(".crow"); if (r) go("organizations", r.dataset.id); });
 centCols.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("crow")){ e.preventDefault(); go("organizations", e.target.dataset.id); } });
 
@@ -2746,7 +2877,7 @@ const TOUR = [
      <ul><li><b>Hover</b> a dot to see its neighbours; <b>click</b> it to pin details in the right panel.</li>
 <li>The <b>left panel</b> holds the filtering options; the <b>right panel</b> shows the community results, the search bar and the view options (layout, dot size, tie strength).</li>
 <li><b>Detail</b> splits the network into more or fewer communities.</li>
-<li><b>Export</b> the filtered graph as GraphML or CSV from the right panel.</li></ul>`},
+<li><b>Export</b> the filtered graph as GraphML or CSV, or save the picture as a 300 dpi PNG, from the right panel.</li></ul>`},
   {icon:"🎛️", step:"Panel 1 of 5", title:"Filtering options", view:"network", body:
 `<p><b>1) Filtering the network</b> rebuilds the ties from just one kind of discourse — policy beliefs, capacity beliefs, risk phase or solutions — or from individual categories via <b>Customize…</b>.</p>
 <p><b>2) Filtering organizations</b> keeps only the organizations you choose, by <b>type</b>, <b>city base</b>, <b>city agenda</b> and <b>themes discussed</b>.</p>
@@ -2767,7 +2898,8 @@ const TOUR = [
      <ul><li><b>Degree</b> — how many others it is tied to.</li>
      <li><b>Betweenness</b> — how often it bridges distant parts of the network.</li>
      <li><b>Eigenvector</b> — how tied it is to other well-connected organizations.</li></ul>
-     <p>View them as three lists or as one sortable <b>combined table</b>.</p>`},
+     <p>Switch between <b>Unweighted</b> (every tie counts the same) and <b>Weighted</b> (a stronger tie counts more: weighted degree is the total tie strength, weighted betweenness follows the strongest paths).</p>
+     <p>View them as three lists or as one sortable <b>combined table</b> that shows both calculations.</p>`},
   {icon:"💬", step:"Panel 5 of 5", title:"Discourses", view:"discourses", body:
     `<p>A summary of every discourse on its own: how often it is mentioned, by how many organizations, and where it sits among concepts, solutions and themes.</p>
      <p>Select a discourse to see who uses it, which communities it appears in, and a space for <b>example statements</b>.</p>

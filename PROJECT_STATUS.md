@@ -83,6 +83,75 @@ what stands out inside the community. Definition details:
   states); Share and vs network render exactly as before.
 - Also fixed: the Share tooltip still referred to the Weighting option removed earlier.
 
+## PNG export of the network, 300 dpi (5 November 2026)
+
+The **Export filtered graph** section (Network tab, right panel) has a third button, **PNG (300 dpi)**, with an option
+**Add legend and filters to the PNG** (on by default) and a line giving the image size, e.g. "2,375 × 2,816 px ·
+20.1 × 23.8 cm at 300 dpi".
+
+- The picture is the graph exactly as on screen (layout, zoom, pan, labels, selection / search / community highlight,
+  current light or dark theme), not the whole page. The page colour is painted behind it.
+- **Resolution:** it is rendered at 300 ÷ 96 = 3.125 times the on-screen size, so the printed size equals the on-screen
+  size at 96 px per inch, and the file carries a `pHYs` chunk declaring 300 dpi (11811 pixels per metre) so Word,
+  InDesign, etc. place it at the right size. The same drawing code (`render()`) runs against an off-screen canvas
+  (`renderToCanvas()`), and was verified to be pixel-identical to the on-screen canvas at equal resolution in eight
+  states (layouts, label modes, selection, search, community focus, filters, theme).
+- **Footer** (if ticked): a band under the graph with the community legend (colour, number and size), the network
+  filter, the organization filter, the number of organizations and ties shown, the node-size measure and the date.
+- **Limit:** very large windows are capped at 16,000 px per side and 120 megapixels; the dpi written into the file and
+  shown in the size line is then the real, lower one (a 9000 × 7000 px window gives about 131 dpi).
+- The empty space around the graph is the same as on screen (the graph is fitted to the window); it is not cropped.
+- Code: section "PNG image of the network" in `platform.html` (`exportPng()`, `pngPlan()`, `pngSetDpi()`). `canvas` and
+  `ctx` became `let` so they can be swapped for the export.
+
+## Weighted centrality (5 November 2026)
+
+The Centrality tab has a **Calculation: Unweighted | Weighted** switch (default **Weighted**). The three ranked lists, and the
+centrality tiles on an organization's profile (which carry the same switch, kept in sync), follow it:
+
+| | Unweighted (every tie counts the same) | Weighted (a stronger tie counts more) |
+|---|---|---|
+| Degree | number of ties | **weighted degree**: sum of the strengths of its ties |
+| Betweenness | shortest paths counted in hops | **weighted betweenness**: shortest paths where a tie is as long as 1 ÷ its strength |
+| Eigenvector | **new:** every tie counts as 1 | weighted eigenvector (this is how the platform always computed it) |
+
+- Both betweenness versions are Brandes' algorithm (the weighted one with Dijkstra and a binary heap, with a small
+  tolerance when comparing path lengths) normalised by (N-1)(N-2), so they are on the same 0-1 scale. Code:
+  `betweenness(weighted)` and `eigenvector(weighted)` in `platform.html`; the six measures are defined in `CENT_ALL`.
+- The **Combined table** shows both calculations side by side (degree, W. degree, betweenness, W. betweenness,
+  eigenvector, W. eigenvector) with network-wide ranks, and sorts on any column.
+- **Node size** has a new option, *Weighted betweenness* (the old Eigenvector option is now labelled *Weighted
+  eigenvector*, which it always was). The **export** adds `betweenness_weighted` and `eigenvector_unweighted`.
+- Verified against NetworkX (betweenness; the weighted case with exact integer path lengths) and NumPy (principal
+  eigenvectors) in seven filter states: degrees are exact, eigenvectors agree to numerical precision, betweenness to
+  its 4-decimal rounding.
+- Worth knowing: weighted betweenness is very concentrated in this network. Similarity ties are nearly complete and
+  their strengths range widely, so with distance = 1 ÷ strength the shortest paths run through a few strong-tie hubs:
+  only 10 of 124 organizations have a non-zero value in the full network (115 have a non-zero hop-based betweenness),
+  and the others tie at rank 11 with 0.0000. Other path-length rules (for example a tunable exponent on the strength,
+  or a distance such as 1 / log of the strength) would spread it more; the choice is a method decision.
+- The initial centralities at page load come from the precomputed data; weighted betweenness and the unweighted
+  eigenvector are computed in `computeCentralityExtras()`, which runs at load and after every filter change.
+
+## Community profiles: density of similarity and average tie strength (5 November 2026)
+
+The community card's metric tiles are now, in order: **Organizations**, **Average connections**, **Density of similarity**,
+**Average tie strength**, and **Mentions** (full width). The old "Tie strength kept inside" tile was replaced.
+
+- **Density of similarity** is the community's network density: the share of all possible pairs of its members that
+  are tied, i.e. that share at least one mention category in the categories selected in the network filter (0 to 1,
+  two decimals, "—" for a single member). The whole-network-view density is printed next to it ("· network 0.65").
+  The tooltip gives the pair counts and keeps the old "tie strength kept inside" figure.
+- **Average tie strength** is the weighted counterpart: the total tie strength among the members divided by all their
+  possible pairs, where untied pairs count 0 (so it combines how many pairs are similar and how strongly). The
+  network-view value is printed next to it, and the tooltip also gives the average over tied pairs only. Tie strength
+  is the overlap of two organizations' mentions in the selected categories.
+- Because most pairs of organizations share at least one category, the unweighted density is high everywhere and reaches
+  1.00 in several filtered views; the average tie strength separates communities better (e.g. 6.7 vs 2.1 in the full
+  network).
+- Computed in `refreshViewStats()` (`c.density`, `c.inTies`, `c.pairs`, `c.meanTie`, `c.meanTied`, `NETDENS`, `NETMEAN`);
+  both tiles verified against the dataset in several filter states.
+
 ## Community profiles: types of organization (4 November 2026)
 
 The community card (left side of the Communities tab) has a **Types of organization** block, just under the
