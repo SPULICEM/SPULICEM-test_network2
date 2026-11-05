@@ -1,9 +1,8 @@
 # Governing Resilient Cities — static site bundle
 
 Five self-contained HTML files, ready to publish on GitHub Pages. No build step,
-no dependencies to install — each file only loads Google Fonts over the network;
-everything else (including all logos and the entire platform app) is embedded
-inline, so the site also works if you just double-click a file and open it
+no dependencies to install — everything (including the fonts, all logos and the entire
+platform app) is embedded inline, so the site also works if you just double-click a file and open it
 locally.
 
 ## Files
@@ -25,14 +24,15 @@ further changes.
 
 1. Create a new repository on GitHub (public, so Pages can serve it on a free
    plan — e.g. `governing-resilient-cities`).
-2. Add these five files to the repository root (drag-and-drop them in the
+2. Add the five HTML files and the `.nojekyll` file (an empty file that tells GitHub Pages to serve the files as they are) to the repository root (drag-and-drop them in the
    GitHub web UI under "Add file → Upload files", or `git add` / `git commit`
    / `git push` if you're working from the command line).
-3. In the repository, go to **Settings → Pages**.
-4. Under "Build and deployment", set **Source** to "Deploy from a branch",
+3. Optionally add the `data/` and `tools/` folders too; the site does not need them to run.
+4. In the repository, go to **Settings → Pages**.
+5. Under "Build and deployment", set **Source** to "Deploy from a branch",
    pick the branch you pushed to (usually `main`), and set the folder to `/`
    (root).
-5. Save. GitHub will give you a URL shortly, typically
+6. Save. GitHub will give you a URL shortly, typically
    `https://<your-username>.github.io/<repository-name>/`.
 
 The "Roadmap for integration" page isn't built yet, so its nav entries are
@@ -46,3 +46,9 @@ those entries at it the same way the other pages link to each other.
 `tools/merge_node_attributes.py` merges the attribute sheet into `processed_graph.json` and the
 data embedded in `platform.html` (needs Python with `pandas` and `openpyxl`). It is not needed to
 publish the site.
+
+## Checked before delivery
+
+All five pages were opened from a local web server: every link between them resolves, there are no JavaScript
+errors, and no page requests anything from outside the folder. Links between pages use plain file names, so the
+folder works the same on GitHub Pages (`https://<user>.github.io/<repo>/`) or opened locally.

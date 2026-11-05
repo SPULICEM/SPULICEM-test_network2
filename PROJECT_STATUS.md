@@ -385,3 +385,25 @@ links above) and describe what you want next — for example, building the
 Roadmap for integration page, filling in the pending citations and content,
 or adjusting anything on the platform. There's no need to re-explain the
 project background; this file and the files themselves carry that context.
+
+## Terrestres redesign of the four content pages (5 November 2026)
+
+`index.html`, `intro.html`, `how.html` and `scientific-basis.html` were restyled with the Terrestres design
+system (https://claude.ai/artifact/11dEebxaUCmkVH1t8u4uTk). `platform.html` was **not** changed.
+
+- **Colours:** only azul `#4A96D2`, laranja `#EC6730`, preto, cinza `#E0DFDA` and branco. Page ground is cinza; white
+  panels for graphs and key boxes; square corners; hairline (1 px) rules. Orange is kept for actions, the current
+  menu item, link underlines and the logo mark; blue marks highlighted content. No dark mode on these pages.
+- **Type:** Bogue (Regular, Bold) for titles and headings; Noto Sans (Light, Regular, Italic, SemiBold, Bold,
+  ExtraBold) for text. Both are embedded in each page as subsetted WOFF2 (Latin), so these four pages need no network.
+- **Brand elements:** the Terrestres asterisk replaces the old three-dot logo; each page opens on a grafismo band
+  (Welcome: conectivo, Short introduction: reverberativo, How it works: eólico, Scientific basis: térmico). Titles sit
+  on the gray below the band, never over the lines.
+- **Navigation:** the inner pages end with Previous / Next links following the reading order (Roadmap is skipped
+  until it exists). The header menu still lists it as "soon".
+- **Welcome:** the Edinburgh Napier University logo was added to the About section (from a small screenshot; replace
+  with a vector or larger PNG if available). The pattern and network snapshot fade in once on load.
+- **Network illustrations** on Welcome and How it works now colour the three communities azul, laranja and preto
+  (the platform still uses blue, orange and green).
+- The pages were generated from the original files by a small script; to change the look, edit the pages directly or
+  ask Claude to rebuild from this bundle.
